@@ -14,7 +14,7 @@ import { home, list } from 'ionicons/icons'
 
 const Tabs: React.FC = () => (
   <IonTabs>
-    <IonRouterOutlet>
+    <IonRouterOutlet id="main">
       <Route path="/home" component={Home} exact />
       <Route path="/list" component={List} exact />
       <Route path="/details" component={Details} exact />

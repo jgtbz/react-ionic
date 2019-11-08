@@ -3,7 +3,7 @@ import { IonApp } from '@ionic/react'
 
 import { IonReactRouter } from '@ionic/react-router'
 
-import { AppMenu, AppTabs } from './components'
+import { Public, Secure } from './layouts'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -18,13 +18,20 @@ import '@ionic/react/css/display.css'
 
 import './theme/variables.css'
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <AppMenu />
-      <AppTabs />
-    </IonReactRouter>
-  </IonApp>
-)
+const App: React.FC = () => {
+  const token = window.localStorage.getItem('token')
+
+  const Layout = token
+    ? Secure
+    : Public
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <Layout />
+      </IonReactRouter>
+    </IonApp>
+  )
+}
 
 export default App
