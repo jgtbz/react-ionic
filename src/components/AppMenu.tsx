@@ -15,7 +15,7 @@ import {
 
 import { home, list } from 'ionicons/icons'
 
-export interface Menu {
+interface Menu {
   title: string
   url: string
   icon: object

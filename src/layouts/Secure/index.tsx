@@ -1,13 +1,15 @@
 import React from 'react'
-import { IonContent } from '@ionic/react'
+import { IonApp, IonContent } from '@ionic/react'
 
 import { AppMenu, AppTabs } from '../../components'
 
 const Secure: React.FC = () => (
-  <IonContent>
-    <AppMenu />
-    <AppTabs />
-  </IonContent>
+  <IonApp>
+    <IonContent>
+      <AppMenu />
+      <AppTabs />
+    </IonContent>
+  </IonApp>
 )
 
 export default Secure

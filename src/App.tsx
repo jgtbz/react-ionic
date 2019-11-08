@@ -1,5 +1,4 @@
 import React from 'react'
-import { IonApp } from '@ionic/react'
 
 import { IonReactRouter } from '@ionic/react-router'
 
@@ -19,18 +18,16 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 
 const App: React.FC = () => {
-  const token = window.localStorage.getItem('token')
+  const token = false
 
   const Layout = token
     ? Secure
     : Public
 
   return (
-    <IonApp>
-      <IonReactRouter>
-        <Layout />
-      </IonReactRouter>
-    </IonApp>
+    <IonReactRouter>
+      <Layout />
+    </IonReactRouter>
   )
 }
 
