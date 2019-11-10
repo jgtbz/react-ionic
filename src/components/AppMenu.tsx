@@ -13,7 +13,7 @@ import {
   IonLabel
 } from '@ionic/react'
 
-import { home, list } from 'ionicons/icons'
+import { home } from 'ionicons/icons'
 
 interface Menu {
   title: string
@@ -23,14 +23,29 @@ interface Menu {
 
 const menu: Menu[] = [
   {
-    title: 'Home',
-    url: '/home',
+    title: 'Dashboard',
+    url: '/dashboard',
     icon: home
   },
   {
-    title: 'List',
-    url: '/list',
-    icon: list
+    title: 'Page 1',
+    url: '/page1',
+    icon: home
+  },
+  {
+    title: 'Page 2',
+    url: '/page2',
+    icon: home
+  },
+  {
+    title: 'Page 3',
+    url: '/page3',
+    icon: home
+  },
+  {
+    title: 'Page 4',
+    url: '/page4',
+    icon: home
   }
 ]
 

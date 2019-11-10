@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { IonReactRouter } from '@ionic/react-router'
 
 import { Public, Secure } from './layouts'
