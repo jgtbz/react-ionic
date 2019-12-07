@@ -15,7 +15,6 @@ import { RouteComponentProps } from 'react-router-dom'
 import { login } from '../../../services/auth'
 
 const Component: React.FC<RouteComponentProps> = () => {
-  console.log({ login })
   login({ email: 'chaz_rowe21@yahoo.com', password: '123456' }).then(response => console.log(response))
   return (
     <IonPage>
@@ -37,8 +36,8 @@ const Component: React.FC<RouteComponentProps> = () => {
           <IonInput></IonInput>
         </IonItem>
         <IonButton>Submit</IonButton>
-        <IonButton routerLink="/register">Register</IonButton>
-        <IonButton routerLink="/forgot-password">Forgot Password</IonButton>
+        {/* <IonButton routerLink="/register">Register</IonButton>
+        <IonButton routerLink="/forgot-password">Forgot Password</IonButton> */}
       </IonContent>
     </IonPage>
   )

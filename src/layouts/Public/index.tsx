@@ -12,7 +12,7 @@ const Public: React.FC = () => (
         <Route path="/login" component={Login} exact />
         <Route path="/register" component={Register} exact />
         <Route path="/forgot-password" component={ForgotPassword} exact />
-        <Route path="/" render={() => <Redirect to="/presentation" exact /> } />
+        <Route path="/" render={() => <Redirect to="/login" exact /> } />
       </IonRouterOutlet>
     </IonContent>
   </IonApp>

@@ -19,7 +19,7 @@ interface Tab {
   icon: object
 }
 
-const tab: Tab[] = [
+const tabs: Tab[] = [
   {
     title: 'Page 1',
     tab: 'page1',
@@ -60,7 +60,7 @@ const Tabs: React.FC<RouteComponentProps> = ({ location }) => {
         <Route path="/" render={() => <Redirect to="/dashboard" exact /> } />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        {tab.map((item, index) => (
+        {tabs.map((item, index) => (
           <IonTabButton key={index} tab={item.tab} href={item.url} selected={isSelected(item.url)}>
             <IonIcon icon={item.icon} />
             <IonLabel>{item.title}</IonLabel>
