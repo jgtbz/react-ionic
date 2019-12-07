@@ -11,19 +11,25 @@
     "@types/react-dom": "^16.9.1",
     "@types/react-router": "^5.1.1",
     "@types/react-router-dom": "^5.1.0",
+    "axios": "^0.19.0",
     "ionicons": "^4.6.3",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
+    "ramda": "^0.26.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.2.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "commit": "git add . && git commit -m 'att'"
   },
   "eslintConfig": {
     "extends": "react-app"

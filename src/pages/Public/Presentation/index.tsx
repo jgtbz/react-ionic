@@ -3,11 +3,11 @@ import {
   IonPage,
   IonContent,
   IonSlides,
-  IonSlide
+  IonSlide,
+  IonButton
 } from '@ionic/react'
-import { RouteComponentProps } from 'react-router-dom'
 
-const Component: React.FC<RouteComponentProps> = ({ history }) => (
+const Component: React.FC = () => (
   <IonPage>
     <IonContent>
       <IonSlides>
@@ -18,7 +18,11 @@ const Component: React.FC<RouteComponentProps> = ({ history }) => (
           <h1>Slide 2</h1>
         </IonSlide>
         <IonSlide>
-          <h1>Slide 3</h1>
+          <div>
+            <h1>Slide 3</h1>
+            <IonButton routerLink="/login">Login</IonButton>
+            <IonButton routerLink="/register">Register</IonButton>
+          </div>
         </IonSlide>
       </IonSlides>
     </IonContent>

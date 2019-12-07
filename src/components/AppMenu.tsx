@@ -21,7 +21,7 @@ interface Menu {
   icon: object
 }
 
-const menu: Menu[] = [
+const menu: Array<Menu> = [
   {
     title: 'Dashboard',
     url: '/dashboard',
