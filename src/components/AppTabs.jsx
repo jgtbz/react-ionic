@@ -8,8 +8,14 @@ import {
   IonIcon,
   IonLabel
 } from '@ionic/react'
-
-import { Dashboard, Page1, Page11, Page2, Page3, Page4 } from '../pages/Secure'
+import {
+  Dashboard,
+  Page1,
+  Page11,
+  Page2,
+  Page3,
+  Page4
+} from '../pages/Secure'
 import { home } from 'ionicons/icons'
 
 const tabs = [
@@ -39,7 +45,7 @@ const tabs = [
   }
 ]
 
-const Tabs = ({ location }) => {
+const Component = ({ location }) => {
   const isSelected = (url) => url === location.pathname
   return (
     <IonTabs>
@@ -64,4 +70,4 @@ const Tabs = ({ location }) => {
   )
 }
 
-export default withRouter(Tabs)
+export default withRouter(Component)

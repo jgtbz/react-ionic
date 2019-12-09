@@ -3,7 +3,7 @@ import { IonApp, IonContent } from '@ionic/react'
 
 import { AppMenu, AppTabs } from '../../components'
 
-const Secure = () => (
+const Component = () => (
   <IonApp>
     <IonContent>
       <AppMenu />
@@ -12,4 +12,4 @@ const Secure = () => (
   </IonApp>
 )
 
-export default Secure
+export default Component

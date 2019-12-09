@@ -12,7 +12,6 @@ import {
   IonIcon,
   IonLabel
 } from '@ionic/react'
-
 import { home } from 'ionicons/icons'
 
 const menu = [
@@ -43,7 +42,7 @@ const menu = [
   }
 ]
 
-const Menu = () => (
+const Component = () => (
   <IonMenu contentId="main" type="overlay">
     <IonHeader>
       <IonToolbar>
@@ -65,4 +64,4 @@ const Menu = () => (
   </IonMenu>
 )
 
-export default withRouter(Menu)
+export default withRouter(Component)

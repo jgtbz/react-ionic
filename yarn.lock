@@ -1631,6 +1631,11 @@
     lodash.unescape "4.0.1"
     semver "^6.3.0"
 
+"@vitorluizc/persistence@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@vitorluizc/persistence/-/persistence-1.0.1.tgz#f6ad9e9f5ad01e31118ecadffcf7089ccbf38b7e"
+  integrity sha512-PQV6SZEnZ2apdpeIQxtLXCejwbm0YX8QhT/6K9h4dzIC/ooPtEgd0l8/OygALsrMw1DMl1yHPr8XUQ5WPOVDcg==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"

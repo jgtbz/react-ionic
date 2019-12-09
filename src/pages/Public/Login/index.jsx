@@ -12,11 +12,8 @@ import {
   IonButton,
   IonAlert
 } from '@ionic/react'
-
+import { AppForm } from '../../../components'
 import { login } from '../../../services/auth'
-
-import { Formik } from 'formik'
-
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
@@ -37,9 +34,9 @@ const Component = ({ history }) => {
       .max(6, 'Máximo de 6 caracteres')
   })
 
-  const handleToken = (response) => console.log(response.data.token)
+  const handleToken = ({ data }) => console.log(data.token)
   const handleRedirect = () => history.push('/dashboard')
-  const showAlertError = (error) => setShowError(error.response.data.message)
+  const showAlertError = ({ response }) => setShowError(response.data.message)
 
   const handleLogin = (values) => login(values)
     .then(handleToken)
@@ -52,18 +49,14 @@ const Component = ({ history }) => {
       .finally(() => actions.setSubmitting(''))
   }
 
-  const Form = ({ handleSubmit, values, errors, touched, setFieldValue, setFieldTouched, isSubmitting, dirty }) => (
+  const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
       <IonItem lines="none">
         <IonLabel position="stacked" color={!!errors.email ? 'danger' : 'black'}>Email</IonLabel>
         <IonInput
           name="email"
           value={values.email}
-          onIonInput={event => {
-            const { name, value } = event.target
-            setFieldValue(name, value)
-            setFieldTouched(name)
-          }}
+          onIonInput={handleChange}
         />
         {errors.email && touched.email ? (
           <span>{errors.email}</span>
@@ -76,11 +69,7 @@ const Component = ({ history }) => {
         <IonInput
           name="password"
           value={values.password}
-          onIonInput={event => {
-            const { name, value } = event.target
-            setFieldValue(name, value)
-            setFieldTouched(name)
-          }}
+          onIonInput={handleChange}
         />
         {errors.password && touched.password ? (
           <span>{errors.password}</span>
@@ -107,9 +96,11 @@ const Component = ({ history }) => {
       </IonHeader>
       <IonContent fullscreen>
         <h3>Login</h3>
-        <Formik initialValues={model} validationSchema={schema} onSubmit={handleSubmit}>
-          {props => <Form {...props} />}
-        </Formik>
+        <AppForm
+          model={model}
+          schema={schema}
+          onSubmit={handleSubmit}
+          Form={Form} />
         <IonAlert
           isOpen={!!showError}
           onDidDismiss={() => setShowError('')}

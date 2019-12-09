@@ -4,7 +4,7 @@ import { IonApp, IonContent, IonRouterOutlet } from '@ionic/react'
 
 import { Presentation, Login, Register, ForgotPassword } from '../../pages/Public'
 
-const Public = () => (
+const Component = () => (
   <IonApp>
     <IonContent>
       <IonRouterOutlet id="main">
@@ -18,4 +18,4 @@ const Public = () => (
   </IonApp>
 )
 
-export default Public
+export default Component
