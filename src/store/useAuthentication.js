@@ -1,7 +1,7 @@
-import UseStore from './useStore.js'
+import useStore from './useStore.js'
 
 const useAuthentication = () => {
-  const { state, updateState } = UseStore()
+  const { state, updateState } = useStore()
 
   const setUser = (user) => updateState({ user })
 
