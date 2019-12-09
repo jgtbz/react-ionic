@@ -6,8 +6,13 @@ import {
   IonButtons,
   IonMenuButton,
   IonTitle,
-  IonContent
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from '@ionic/react'
+import { power } from 'ionicons/icons'
+import { useAuthentication } from '../../../store'
 
 const Component = () => {
   return (
@@ -21,6 +26,11 @@ const Component = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonFab vertical="top" horizontal="end">
+          <IonFabButton onIonFocus={useAuthentication().logout}>
+            <IonIcon icon={power} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   )

@@ -14,12 +14,14 @@ import {
 } from '@ionic/react'
 import { AppForm } from '../../../components'
 import { login } from '../../../services/auth'
+import { profile } from '../../../services/users'
+import { useAuthentication } from '../../../store'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
   const model = {
-    email: '',
-    password: ''
+    email: 'kelvin_wolff95@yahoo.com',
+    password: '123456'
   }
 
   const schema = yup.object().shape({
@@ -34,14 +36,16 @@ const Component = ({ history }) => {
       .max(6, 'Máximo de 6 caracteres')
   })
 
-  const handleToken = ({ data }) => console.log(data.token)
+  const handleToken = ({ data }) => useAuthentication().setToken(data.token)
+  const handleUser = () => profile().then(({ data }) => useAuthentication().setUser(data.data))
   const handleRedirect = () => history.push('/dashboard')
   const showAlertError = ({ response }) => setShowError(response.data.message)
 
   const handleLogin = (values) => login(values)
     .then(handleToken)
+    // .then(handleUser)
     .then(handleRedirect)
-    .catch(showAlertError)
+    // .catch(showAlertError)
 
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
@@ -99,7 +103,7 @@ const Component = ({ history }) => {
         <AppForm
           model={model}
           schema={schema}
-          onSubmit={handleSubmit}
+          handleSubmit={handleSubmit}
           Form={Form} />
         <IonAlert
           isOpen={!!showError}

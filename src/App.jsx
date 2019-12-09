@@ -1,7 +1,7 @@
 import React from 'react'
 import { IonReactRouter } from '@ionic/react-router'
-
 import { Public, Secure } from './layouts'
+import { useAuthentication } from './store'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -17,9 +17,9 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 
 const App = () => {
-  const token = false
+  const { isLogged } = useAuthentication()
 
-  const Layout = token
+  const Layout = isLogged
     ? Secure
     : Public
 
