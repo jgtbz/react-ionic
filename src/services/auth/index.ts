@@ -7,26 +7,26 @@ interface loginInterface {
 
 const login = (payload: loginInterface): Promise<Object> => http.post('/auth/login', payload)
 
-// interface forgotPasswordSendPin {
-//   email: string,
-//   password: string
-// }
+interface forgotPasswordSendPinInterface {
+  email: string,
+  password: string
+}
 
-const forgotPasswordSendPin = (payload: loginInterface): Promise<Object> => http.patch('/users/forgot-password/send-pin', payload)
+const forgotPasswordSendPin = (payload: forgotPasswordSendPinInterface): Promise<Object> => http.patch('/users/forgot-password/send-pin', payload)
 
-// interface forgotPasswordValidatePin {
-//   email: string,
-//   password: string
-// }
+interface forgotPasswordValidatePinInterface {
+  email: string,
+  password: string
+}
 
-const forgotPasswordValidatePin = (payload: loginInterface): Promise<Object> => http.patch('/users/forgot-password/validate-pin', payload)
+const forgotPasswordValidatePin = (payload: forgotPasswordValidatePinInterface): Promise<Object> => http.patch('/users/forgot-password/validate-pin', payload)
 
-// interface forgotPassword {
-//   email: string,
-//   password: string
-// }
+interface forgotPasswordInterface {
+  email: string,
+  password: string
+}
 
-const forgotPassword = (payload: loginInterface): Promise<Object> => http.patch('/users/forgot-password', payload)
+const forgotPassword = (payload: forgotPasswordInterface): Promise<Object> => http.patch('/users/forgot-password', payload)
 
 export {
   login,

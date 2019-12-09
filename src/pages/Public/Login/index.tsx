@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   IonPage,
   IonHeader,
@@ -9,13 +9,99 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton
+  IonButton,
+  IonAlert
 } from '@ionic/react'
 import { RouteComponentProps } from 'react-router-dom'
+
 import { login } from '../../../services/auth'
 
-const Component: React.FC<RouteComponentProps> = () => {
-  login({ email: 'chaz_rowe21@yahoo.com', password: '123456' }).then(response => console.log(response))
+import { Formik } from 'formik'
+
+import * as yup from 'yup'
+
+interface modelInterface {
+  email: string,
+  password: string
+}
+
+const Component: React.FC<RouteComponentProps> = ({ history }) => {
+  const model = {
+    email: '',
+    password: ''
+  }
+
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email('Email inválido')
+      .required('Campo obrigatório'),
+    password: yup
+      .string()
+      .required('Campo obrigatório')
+      .min(4, 'Mínimo de 4 caracteres')
+      .max(6, 'Máximo de 6 caracteres')
+  })
+
+  const handleToken = (response: any) => console.log(response.data.token)
+  const handleRedirect = () => history.push('/dashboard')
+  const showAlertError = (error: any) => setShowError(error.response.data.message)
+
+  const handleLogin = (values: modelInterface) => login(values)
+    .then(handleToken)
+    .then(handleRedirect)
+    .catch(showAlertError)
+
+  const handleSubmit = (values: modelInterface, actions: any) => {
+    actions.setSubmitting(true)
+    handleLogin(values)
+      .finally(() => actions.setSubmitting(''))
+  }
+
+  const Form = ({ handleSubmit, values, errors, touched, setFieldValue, setFieldTouched, isSubmitting, dirty }: any) => (
+    <form onSubmit={handleSubmit}>
+      <IonItem lines="none">
+        <IonLabel position="stacked" color={!!errors.email ? 'danger' : 'black'}>Email</IonLabel>
+        <IonInput
+          name="email"
+          value={values.email}
+          onIonInput={(event: any) => {
+            const { name, value } = event.target
+            setFieldValue(name, value)
+            setFieldTouched(name)
+          }}
+        />
+        {errors.email && touched.email ? (
+          <span>{errors.email}</span>
+        ) : (
+          ''
+        )}
+      </IonItem>
+      <IonItem lines="none">
+        <IonLabel position="stacked" color={!!errors.password ? 'danger' : 'black'}>Password</IonLabel>
+        <IonInput
+          name="password"
+          value={values.password}
+          onIonInput={(event: any) => {
+            const { name, value } = event.target
+            setFieldValue(name, value)
+            setFieldTouched(name)
+          }}
+        />
+        {errors.password && touched.password ? (
+          <span>{errors.password}</span>
+        ) : (
+          ''
+        )}
+      </IonItem>
+      <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
+      <IonButton routerLink="/register">Register</IonButton>
+      <IonButton routerLink="/forgot-password">Forgot Password</IonButton>
+    </form>
+  )
+
+  const [showError, setShowError] = useState('')
+
   return (
     <IonPage>
       <IonHeader>
@@ -27,17 +113,17 @@ const Component: React.FC<RouteComponentProps> = () => {
       </IonHeader>
       <IonContent fullscreen>
         <h3>Login</h3>
-        <IonItem>
-          <IonLabel>Email</IonLabel>
-          <IonInput></IonInput>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Password</IonLabel>
-          <IonInput></IonInput>
-        </IonItem>
-        <IonButton>Submit</IonButton>
-        {/* <IonButton routerLink="/register">Register</IonButton>
-        <IonButton routerLink="/forgot-password">Forgot Password</IonButton> */}
+        <Formik initialValues={model} validationSchema={schema} onSubmit={handleSubmit}>
+          {props => <Form {...props} />}
+        </Formik>
+        <IonAlert
+          isOpen={!!showError}
+          onDidDismiss={() => setShowError('')}
+          header={'Alert'}
+          subHeader={'Subtitle'}
+          message={showError}
+          buttons={['OK']}
+        />
       </IonContent>
     </IonPage>
   )
