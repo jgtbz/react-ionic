@@ -7,7 +7,7 @@ import {
   IonButton
 } from '@ionic/react'
 
-const Component: React.FC = () => (
+const Component = () => (
   <IonPage>
     <IonContent>
       <IonSlides>

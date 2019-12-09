@@ -4,21 +4,20 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonBackButton,
+  IonMenuButton,
   IonTitle,
   IonContent
 } from '@ionic/react'
-import { RouteComponentProps } from 'react-router-dom'
 
-const Component: React.FC<RouteComponentProps> = () => {
+const Component = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton />
+            <IonMenuButton />
           </IonButtons>
-          <IonTitle>Page 11</IonTitle>
+          <IonTitle>Dashboard</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

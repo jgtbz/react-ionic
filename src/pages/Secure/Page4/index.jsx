@@ -8,9 +8,8 @@ import {
   IonTitle,
   IonContent
 } from '@ionic/react'
-import { RouteComponentProps } from 'react-router-dom'
 
-const Component: React.FC<RouteComponentProps> = () => {
+const Component = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -18,7 +17,7 @@ const Component: React.FC<RouteComponentProps> = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Page 1</IonTitle>
+          <IonTitle>Page 4</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

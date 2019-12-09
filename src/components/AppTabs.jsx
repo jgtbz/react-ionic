@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import {
   IonRouterOutlet,
   IonTabs,
@@ -12,14 +12,7 @@ import {
 import { Dashboard, Page1, Page11, Page2, Page3, Page4 } from '../pages/Secure'
 import { home } from 'ionicons/icons'
 
-interface Tab {
-  title: string
-  tab: string,
-  url: string,
-  icon: object
-}
-
-const tabs: Tab[] = [
+const tabs = [
   {
     title: 'Page 1',
     tab: 'page1',
@@ -46,8 +39,8 @@ const tabs: Tab[] = [
   }
 ]
 
-const Tabs: React.FC<RouteComponentProps> = ({ location }) => {
-  const isSelected = (url: string) => url === location.pathname
+const Tabs = ({ location }) => {
+  const isSelected = (url) => url === location.pathname
   return (
     <IonTabs>
       <IonRouterOutlet id="main">

@@ -11,9 +11,8 @@ import {
   IonInput,
   IonButton
 } from '@ionic/react'
-import { RouteComponentProps } from 'react-router-dom'
 
-const Component: React.FC<RouteComponentProps> = () => {
+const Component = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -24,13 +23,13 @@ const Component: React.FC<RouteComponentProps> = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <h3>Register</h3>
+        <h3>Forgot Password</h3>
         <IonItem>
-          <IonLabel>Name</IonLabel>
+          <IonLabel>Email</IonLabel>
           <IonInput></IonInput>
         </IonItem>
         <IonItem>
-          <IonLabel>Email</IonLabel>
+          <IonLabel>Code</IonLabel>
           <IonInput></IonInput>
         </IonItem>
         <IonItem>

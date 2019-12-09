@@ -16,7 +16,7 @@ import '@ionic/react/css/display.css'
 
 import './theme/variables.css'
 
-const App: React.FC = () => {
+const App = () => {
   const token = false
 
   const Layout = token

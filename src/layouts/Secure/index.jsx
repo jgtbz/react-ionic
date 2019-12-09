@@ -3,7 +3,7 @@ import { IonApp, IonContent } from '@ionic/react'
 
 import { AppMenu, AppTabs } from '../../components'
 
-const Secure: React.FC = () => (
+const Secure = () => (
   <IonApp>
     <IonContent>
       <AppMenu />

@@ -12,7 +12,6 @@ import {
   IonButton,
   IonAlert
 } from '@ionic/react'
-import { RouteComponentProps } from 'react-router-dom'
 
 import { login } from '../../../services/auth'
 
@@ -20,12 +19,7 @@ import { Formik } from 'formik'
 
 import * as yup from 'yup'
 
-interface modelInterface {
-  email: string,
-  password: string
-}
-
-const Component: React.FC<RouteComponentProps> = ({ history }) => {
+const Component = ({ history }) => {
   const model = {
     email: '',
     password: ''
@@ -43,29 +37,29 @@ const Component: React.FC<RouteComponentProps> = ({ history }) => {
       .max(6, 'Máximo de 6 caracteres')
   })
 
-  const handleToken = (response: any) => console.log(response.data.token)
+  const handleToken = (response) => console.log(response.data.token)
   const handleRedirect = () => history.push('/dashboard')
-  const showAlertError = (error: any) => setShowError(error.response.data.message)
+  const showAlertError = (error) => setShowError(error.response.data.message)
 
-  const handleLogin = (values: modelInterface) => login(values)
+  const handleLogin = (values) => login(values)
     .then(handleToken)
     .then(handleRedirect)
     .catch(showAlertError)
 
-  const handleSubmit = (values: modelInterface, actions: any) => {
+  const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
     handleLogin(values)
       .finally(() => actions.setSubmitting(''))
   }
 
-  const Form = ({ handleSubmit, values, errors, touched, setFieldValue, setFieldTouched, isSubmitting, dirty }: any) => (
+  const Form = ({ handleSubmit, values, errors, touched, setFieldValue, setFieldTouched, isSubmitting, dirty }) => (
     <form onSubmit={handleSubmit}>
       <IonItem lines="none">
         <IonLabel position="stacked" color={!!errors.email ? 'danger' : 'black'}>Email</IonLabel>
         <IonInput
           name="email"
           value={values.email}
-          onIonInput={(event: any) => {
+          onIonInput={event => {
             const { name, value } = event.target
             setFieldValue(name, value)
             setFieldTouched(name)
@@ -82,7 +76,7 @@ const Component: React.FC<RouteComponentProps> = ({ history }) => {
         <IonInput
           name="password"
           value={values.password}
-          onIonInput={(event: any) => {
+          onIonInput={event => {
             const { name, value } = event.target
             setFieldValue(name, value)
             setFieldTouched(name)

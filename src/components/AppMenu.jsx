@@ -15,13 +15,7 @@ import {
 
 import { home } from 'ionicons/icons'
 
-interface Menu {
-  title: string
-  url: string
-  icon: object
-}
-
-const menu: Array<Menu> = [
+const menu = [
   {
     title: 'Dashboard',
     url: '/dashboard',
@@ -49,7 +43,7 @@ const menu: Array<Menu> = [
   }
 ]
 
-const Menu: React.FC = () => (
+const Menu = () => (
   <IonMenu contentId="main" type="overlay">
     <IonHeader>
       <IonToolbar>
