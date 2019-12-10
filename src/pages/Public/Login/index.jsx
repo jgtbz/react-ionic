@@ -69,7 +69,7 @@ const Component = ({ history }) => {
         />
       </IonItem>
       <IonItem lines="none">
-      <AppLabel title="Password" error={errors.email} />
+        <AppLabel title="Password" error={errors.password} />
         <IonInput
           name="password"
           value={values.password}
