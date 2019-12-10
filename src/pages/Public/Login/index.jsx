@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   IonPage,
   IonHeader,
@@ -19,6 +19,13 @@ import { useAuthentication } from '../../../store'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
+  const { token, isLogged, setToken, setUser } = useAuthentication()
+  const [showError, setShowError] = useState('')
+
+  useEffect(() => {
+    console.log({ isLoggedFromComponent: isLogged })
+  }, [token])
+
   const model = {
     email: 'kelvin_wolff95@yahoo.com',
     password: '123456'
@@ -36,21 +43,20 @@ const Component = ({ history }) => {
       .max(6, 'Máximo de 6 caracteres')
   })
 
-  const handleToken = ({ data }) => useAuthentication().setToken(data.token)
-  const handleUser = () => profile().then(({ data }) => useAuthentication().setUser(data.data))
+  const handleToken = ({ data }) => setToken(data.token)
+  const handleUser = () => profile().then(({ data }) => setUser(data.data))
   const handleRedirect = () => history.push('/dashboard')
-  const showAlertError = ({ response }) => setShowError(response.data.message)
+  const showAlertError = (error) => setShowError(error.response.data.message)
 
   const handleLogin = (values) => login(values)
     .then(handleToken)
-    // .then(handleUser)
+    .then(handleUser)
     .then(handleRedirect)
-    // .catch(showAlertError)
-
+    .catch(showAlertError)
+  
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
-    handleLogin(values)
-      .finally(() => actions.setSubmitting(''))
+    handleLogin(values).finally(() => actions.setSubmitting(false))
   }
 
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
@@ -86,8 +92,6 @@ const Component = ({ history }) => {
       <IonButton routerLink="/forgot-password">Forgot Password</IonButton>
     </form>
   )
-
-  const [showError, setShowError] = useState('')
 
   return (
     <IonPage>

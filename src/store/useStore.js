@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import createPersistence from '@vitorluizc/persistence'
 
 const store = createPersistence('store', {
-  storage: window.sessionStorage,
+  storage: window.localStorage,
   placeholder: {
     token: '',
     user: {
@@ -25,10 +25,15 @@ const useStore = () => {
     store.set(state)
   }
 
+  useEffect(() => {
+    console.log({ isLoggedFromUseStore: !!state.token })
+  }, [state.token])
+
   return {
     state,
     updateState
   }
 }
 
+export { store }
 export default useStore

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import useStore from './useStore.js'
 
 const useAuthentication = () => {
@@ -15,6 +16,10 @@ const useAuthentication = () => {
       email: ''
     })
   }
+
+  useEffect(() => {
+    console.log({ isLoggedFromUseAuthentication: !!state.token })
+  }, [state.token])
 
   return {
     user: state.user,

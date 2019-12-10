@@ -1,7 +1,6 @@
 import React from 'react'
 import { IonReactRouter } from '@ionic/react-router'
-import { Public, Secure } from './layouts'
-import { useAuthentication } from './store'
+import { Layout } from './layouts'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -16,18 +15,10 @@ import '@ionic/react/css/display.css'
 
 import './theme/variables.css'
 
-const App = () => {
-  const { isLogged } = useAuthentication()
-
-  const Layout = isLogged
-    ? Secure
-    : Public
-
-  return (
-    <IonReactRouter>
-      <Layout />
-    </IonReactRouter>
-  )
-}
+const App = () => (
+  <IonReactRouter>
+    <Layout />
+  </IonReactRouter>
+)
 
 export default App

@@ -1,4 +1,4 @@
-import { useAuthentication } from '../store'
+import { useAuthentication, store } from '../store'
 import axios from 'axios'
 import { concat } from 'ramda'
 
@@ -11,7 +11,9 @@ const http = axios.create({
 
 http.interceptors.request.use(
   request => {
-    const { token } = useAuthentication()
+    // const { token } = useAuthentication()
+    const token = store.get().token
+    console.log({ token })
     request.headers.Authorization = token && concat('Bearer ', token)
     return Promise.resolve(request)
   })

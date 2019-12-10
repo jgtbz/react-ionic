@@ -15,6 +15,7 @@ import { power } from 'ionicons/icons'
 import { useAuthentication } from '../../../store'
 
 const Component = () => {
+  const { logout } = useAuthentication()
   return (
     <IonPage>
       <IonHeader>
@@ -27,7 +28,7 @@ const Component = () => {
       </IonHeader>
       <IonContent>
         <IonFab vertical="top" horizontal="end">
-          <IonFabButton onIonFocus={useAuthentication().logout}>
+          <IonFabButton onClick={logout}>
             <IonIcon icon={power} />
           </IonFabButton>
         </IonFab>
