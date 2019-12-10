@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   IonPage,
   IonHeader,
@@ -7,24 +7,19 @@ import {
   IonBackButton,
   IonContent,
   IonItem,
-  IonLabel,
   IonInput,
   IonButton,
   IonAlert
 } from '@ionic/react'
-import { AppForm } from '../../../components'
+import { AppForm, AppFormInputError, AppLabel } from '../../../components'
 import { login } from '../../../services/auth'
 import { profile } from '../../../services/users'
 import { useAuthentication } from '../../../store'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const { token, isLogged, setToken, setUser } = useAuthentication()
+  const { setToken, setUser } = useAuthentication()
   const [showError, setShowError] = useState('')
-
-  useEffect(() => {
-    console.log({ isLoggedFromComponent: isLogged })
-  }, [token])
 
   const model = {
     email: 'kelvin_wolff95@yahoo.com',
@@ -48,7 +43,7 @@ const Component = ({ history }) => {
   const handleRedirect = () => history.push('/dashboard')
   const showAlertError = (error) => setShowError(error.response.data.message)
 
-  const handleLogin = (values) => login(values)
+  const handleLogin = (payload) => login(payload)
     .then(handleToken)
     .then(handleUser)
     .then(handleRedirect)
@@ -62,30 +57,28 @@ const Component = ({ history }) => {
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
       <IonItem lines="none">
-        <IonLabel position="stacked" color={!!errors.email ? 'danger' : 'black'}>Email</IonLabel>
+        <AppLabel title="Email" error={errors.email} />
         <IonInput
           name="email"
           value={values.email}
           onIonInput={handleChange}
         />
-        {errors.email && touched.email ? (
-          <span>{errors.email}</span>
-        ) : (
-          ''
-        )}
+        <AppFormInputError
+          error={errors.email}
+          touched={touched.email}
+        />
       </IonItem>
       <IonItem lines="none">
-        <IonLabel position="stacked" color={!!errors.password ? 'danger' : 'black'}>Password</IonLabel>
+      <AppLabel title="Password" error={errors.email} />
         <IonInput
           name="password"
           value={values.password}
           onIonInput={handleChange}
         />
-        {errors.password && touched.password ? (
-          <span>{errors.password}</span>
-        ) : (
-          ''
-        )}
+        <AppFormInputError
+          error={errors.password}
+          touched={touched.password}
+        />
       </IonItem>
       <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
       <IonButton routerLink="/register">Register</IonButton>
@@ -111,9 +104,7 @@ const Component = ({ history }) => {
           Form={Form} />
         <IonAlert
           isOpen={!!showError}
-          onDidDismiss={() => setShowError('')}
-          header={'Alert'}
-          subHeader={'Subtitle'}
+          onDidDismiss={setShowError}
           message={showError}
           buttons={['OK']}
         />

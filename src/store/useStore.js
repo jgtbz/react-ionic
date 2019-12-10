@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import createPersistence from '@vitorluizc/persistence'
 
 const store = createPersistence('store', {
@@ -24,10 +24,6 @@ const useStore = () => {
     setState(state)
     store.set(state)
   }
-
-  useEffect(() => {
-    console.log({ isLoggedFromUseStore: !!state.token })
-  }, [state.token])
 
   return {
     state,
