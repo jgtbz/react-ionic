@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import createPersistence from '@vitorluizc/persistence'
 
+const initialState = {
+  token: '',
+  user: {
+    _id: '',
+    name: '',
+    email: '',
+  }
+}
+
 const store = createPersistence('store', {
   storage: window.localStorage,
-  placeholder: {
-    token: '',
-    user: {
-      _id: '',
-      name: '',
-      email: '',
-    }
-  }
+  placeholder: initialState
 })
 
 const useStore = () => {
