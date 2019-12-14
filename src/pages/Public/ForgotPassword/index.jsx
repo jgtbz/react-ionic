@@ -16,10 +16,11 @@ import {
   forgotPasswordSendPin,
   forgotPasswordValidatePin,
   forgotPassword
-} from '../../../services/users'
+} from '../../../services/auth'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
+  const [currentStep, setCurrentStep] = useState('sendPin')
   const [showAlert, setShowAlert] = useState('')
 
   const model = {
@@ -29,70 +30,80 @@ const Component = ({ history }) => {
     confirmPassword: ''
   }
 
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email('Email inválido')
-      .required('Campo obrigatório'),
-    code: yup
-      .string()
-      .required('Campo obrigatório')
-      .min(4, 'Mínimo de 4 caracteres')
-      .max(4, 'Máximo de 4 caracteres'),
-    password: yup
-      .string()
-      .required('Campo obrigatório')
-      .min(4, 'Mínimo de 4 caracteres')
-      .max(6, 'Máximo de 6 caracteres'),
-    confirmPassword: yup
-      .string()
-      .required('Campo obrigatório')
-      .min(4, 'Mínimo de 4 caracteres')
-      .max(6, 'Máximo de 6 caracteres')
-      .oneOf([yup.ref('password'), null], 'Senhas não conferem')
-  })
+  const emailSchema = yup
+    .string()
+    .email('Email inválido')
+    .required('Campo obrigatório')
+  
+  const codeSchema = yup
+    .string()
+    .required('Campo obrigatório')
 
-  const handleSuccess = () => setShowAlert('Código enviado com sucesso')
+  const passwordSchema = yup
+    .string()
+    .required('Campo obrigatório')
+    .min(4, 'Mínimo de 4 caracteres')
+    .max(6, 'Máximo de 6 caracteres')
+
+  const confirmPasswordSchema = yup
+    .string()
+    .required('Campo obrigatório')
+    .min(4, 'Mínimo de 4 caracteres')
+    .max(6, 'Máximo de 6 caracteres')
+    .oneOf([yup.ref('password'), null], 'Senhas não conferem')
+
+  const schemaSteps = {
+    sendPin: {
+      email: emailSchema
+    },
+    validatePin: {
+      code: codeSchema
+    },
+    forgotPassword: {
+      password: passwordSchema,
+      confirmPassword: confirmPasswordSchema
+    }
+  }
+  const schemaStep = schemaSteps[currentStep]
+
+  const schema = yup.object().shape(schemaStep)
+
+  const changeCurrentStep = (value) => () => setCurrentStep(value)
+
+  const changeCurrentStepToValidatePin = changeCurrentStep('validatePin')
+  const changeCurrentStepToForgotPassword = changeCurrentStep('forgotPassword')
+
+  const handleValidatePinSuccess = () => setShowAlert('Código enviado com sucesso')
   const handleError = (error) => setShowAlert(error.response.data.message)
   const handleRedirect = () => history.push('/login')
   
-  const handleForgotPasswordSendPin = (values, actions) => {
-    actions.setSubmitting(true)
-    forgotPasswordSendPin(values)
-      .then(handleSuccess)
-      .catch(handleError)
-      .finally(() => actions.setSubmitting(false))
+  const handleForgotPasswordSendPin = (values) => forgotPasswordSendPin(values)
+    .then(handleValidatePinSuccess)
+    .then(changeCurrentStepToValidatePin)
+    .catch(handleError)
+
+  const handleForgotPasswordValidatePin = (values) => forgotPasswordValidatePin(values)
+    .then(changeCurrentStepToForgotPassword)
+    .catch(handleError)
+
+  const handleForgotPassword = (values) => forgotPassword(values)
+    .then(handleRedirect)
+    .catch(handleError)
+
+  const steps = {
+    sendPin: handleForgotPasswordSendPin,
+    validatePin: handleForgotPasswordValidatePin,
+    forgotPassword: handleForgotPassword
   }
 
-  const handleForgotPasswordValidatePin = (values, actions) => {
-    actions.setSubmitting(true)
-    forgotPasswordSendPin(values)
-      .catch(handleError)
-      .finally(() => actions.setSubmitting(false))
-  }
-
-  const handleForgotPassword = (values, actions) => {
-    actions.setSubmitting(true)
-    forgotPasswordSendPin(values)
-      .then(handleRedirect)
-      .catch(handleError)
-      .finally(() => actions.setSubmitting(false))
+  const handleSubmit = (values, actions) => {
+     const step = steps[currentStep]
+     actions.setSubmitting(true)
+     step(values).finally(() => actions.setSubmitting(false))
   }
 
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
-      <IonItem lines="none">
-        <AppLabel title="Name" error={errors.name} />
-        <IonInput
-          name="name"
-          value={values.name}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.name}
-          touched={touched.name}
-        />
-      </IonItem>
       <IonItem lines="none">
         <AppLabel title="Email" error={errors.email} />
         <IonInput
@@ -103,6 +114,18 @@ const Component = ({ history }) => {
         <AppFormInputError
           error={errors.email}
           touched={touched.email}
+        />
+      </IonItem>
+      <IonItem lines="none">
+        <AppLabel title="Code" error={errors.code} />
+        <IonInput
+          name="code"
+          value={values.code}
+          onIonInput={handleChange}
+        />
+        <AppFormInputError
+          error={errors.code}
+          touched={touched.code}
         />
       </IonItem>
       <IonItem lines="none">
@@ -154,7 +177,7 @@ const Component = ({ history }) => {
           isOpen={!!showAlert}
           onDidDismiss={setShowAlert}
           onDidPresent={handleRedirect}
-          message={'Success'}
+          message={showAlert}
           buttons={['OK']}
         />
       </IonContent>
