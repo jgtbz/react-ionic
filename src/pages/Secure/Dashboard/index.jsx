@@ -32,6 +32,7 @@ const Component = () => {
             <IonIcon icon={power} />
           </IonFabButton>
         </IonFab>
+        <h3>Dashboard Here</h3>
       </IonContent>
     </IonPage>
   )

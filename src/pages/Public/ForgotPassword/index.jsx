@@ -97,65 +97,67 @@ const Component = ({ history }) => {
   }
 
   const handleSubmit = (values, actions) => {
-     const step = steps[currentStep]
-     actions.setSubmitting(true)
-     step(values).finally(() => actions.setSubmitting(false))
+    const step = steps[currentStep]
+    actions.setSubmitting(true)
+    step(values).finally(() => actions.setSubmitting(false))
   }
 
-  const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
-    <form onSubmit={handleSubmit}>
-      <IonItem lines="none">
-        <AppLabel title="Email" error={errors.email} />
-        <IonInput
-          name="email"
-          value={values.email}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.email}
-          touched={touched.email}
-        />
-      </IonItem>
-      <IonItem lines="none">
-        <AppLabel title="Code" error={errors.code} />
-        <IonInput
-          name="code"
-          value={values.code}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.code}
-          touched={touched.code}
-        />
-      </IonItem>
-      <IonItem lines="none">
-        <AppLabel title="Password" error={errors.password} />
-        <IonInput
-          name="password"
-          value={values.password}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.password}
-          touched={touched.password}
-        />
-      </IonItem>
-      <IonItem lines="none">
-        <AppLabel title="Confirm Password" error={errors.confirmPassword} />
-        <IonInput
-          name="confirmPassword"
-          value={values.confirmPassword}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.confirmPassword}
-          touched={touched.confirmPassword}
-        />
-      </IonItem>
-      <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
-      <IonButton routerLink="/login">Login</IonButton>
-    </form>
-  )
+  const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => {
+    return (
+      <form onSubmit={handleSubmit}>
+        <IonItem lines="none">
+          <AppLabel title="Email" error={errors.email} />
+          <IonInput
+            name="email"
+            value={values.email}
+            onIonInput={handleChange}
+          />
+          <AppFormInputError
+            error={errors.email}
+            touched={touched.email}
+          />
+        </IonItem>
+        <IonItem lines="none">
+          <AppLabel title="Code" error={errors.code} />
+          <IonInput
+            name="code"
+            value={values.code}
+            onIonInput={handleChange}
+          />
+          <AppFormInputError
+            error={errors.code}
+            touched={touched.code}
+          />
+        </IonItem>
+        <IonItem lines="none">
+          <AppLabel title="Password" error={errors.password} />
+          <IonInput
+            name="password"
+            value={values.password}
+            onIonInput={handleChange}
+          />
+          <AppFormInputError
+            error={errors.password}
+            touched={touched.password}
+          />
+        </IonItem>
+        <IonItem lines="none">
+          <AppLabel title="Confirm Password" error={errors.confirmPassword} />
+          <IonInput
+            name="confirmPassword"
+            value={values.confirmPassword}
+            onIonInput={handleChange}
+          />
+          <AppFormInputError
+            error={errors.confirmPassword}
+            touched={touched.confirmPassword}
+          />
+        </IonItem>
+        <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
+        <IonButton routerLink="/login">Login</IonButton>
+      </form>
+    )
+  }
 
   return (
     <IonPage>

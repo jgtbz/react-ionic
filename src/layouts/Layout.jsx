@@ -6,11 +6,13 @@ import { useAuthentication } from '../store'
 const Component = () => {
   const { isLogged } = useAuthentication()
 
-  const Container = isLogged
+  console.log({ isLogged })
+
+  const Layout = false
     ? Secure
     : Public
 
-  return <Container />
+  return <Layout />
 }
 
 export default Component
