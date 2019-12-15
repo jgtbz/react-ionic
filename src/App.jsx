@@ -1,6 +1,6 @@
 import React from 'react'
 import { IonReactRouter } from '@ionic/react-router'
-import { Layout } from './layouts'
+import Layout from './layouts'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
