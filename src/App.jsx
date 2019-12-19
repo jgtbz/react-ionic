@@ -1,4 +1,5 @@
 import React from 'react'
+import { IonApp } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import Layout from './layouts'
 
@@ -16,9 +17,11 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 
 const App = () => (
-  <IonReactRouter>
-    <Layout />
-  </IonReactRouter>
+  <IonApp>
+    <IonReactRouter>
+      <Layout />
+    </IonReactRouter>
+  </IonApp>
 )
 
 export default App

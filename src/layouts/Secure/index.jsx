@@ -1,14 +1,12 @@
 import React from 'react'
-import { IonApp, IonContent } from '@ionic/react'
+import { IonContent } from '@ionic/react'
 import { AppMenu, AppTabs } from '../../components'
 
 const Component = () => (
-  <IonApp>
-    <IonContent>
-      <AppMenu />
-      <AppTabs />
-    </IonContent>
-  </IonApp>
+  <IonContent>
+    <AppMenu />
+    <AppTabs />
+  </IonContent>
 )
 
 export default Component

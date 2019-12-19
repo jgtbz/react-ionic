@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/core": "1.4.0",
-    "@capacitor/ios": "^1.4.0",
     "@ionic/react": "^4.11.0",
     "@ionic/react-router": "^4.11.0",
     "@vitorluizc/persistence": "^1.0.1",
@@ -46,7 +44,6 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "@capacitor/cli": "1.4.0",
     "@ionic/lab": "^1.0.0-rc.13"
   }
 }

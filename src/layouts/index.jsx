@@ -7,8 +7,8 @@ const Component = () => {
   const { isLogged } = useAuthentication()
 
   console.log({ isLogged })
-
-  const Layout = false
+  
+  const Layout = isLogged
     ? Secure
     : Public
 
