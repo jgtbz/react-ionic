@@ -1,7 +1,7 @@
 import React from 'react'
 import { IonApp } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import Layout from './layouts'
+import Container from './containers'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -19,7 +19,7 @@ import './theme/variables.css'
 const App = () => (
   <IonApp>
     <IonReactRouter>
-      <Layout />
+      <Container />
     </IonReactRouter>
   </IonApp>
 )

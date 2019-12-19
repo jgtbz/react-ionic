@@ -8,11 +8,11 @@ const Component = () => {
 
   console.log({ isLogged })
   
-  const Layout = isLogged
+  const Container = isLogged
     ? Secure
     : Public
 
-  return <Layout />
+  return <Container />
 }
 
 export default Component
