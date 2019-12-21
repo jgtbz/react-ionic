@@ -6,12 +6,14 @@ import {
   IonButtons,
   IonBackButton,
   IonContent,
-  IonItem,
   IonInput,
   IonButton,
-  IonAlert
 } from '@ionic/react'
-import { AppForm, AppFormInputError, AppLabel } from '../../../components'
+import {
+  AppForm,
+  AppFormItem,
+  AppAlert
+} from '../../../components'
 import { login } from '../../../services/auth'
 import { profile } from '../../../services/users'
 import { useAuthentication } from '../../../store'
@@ -20,11 +22,11 @@ import * as yup from 'yup'
 
 const Component = ({ history }) => {
   const { setToken, setUser } = useAuthentication()
-  const [error, setError] = useState('')
+  const [alert, setAlert] = useState('')
 
   const model = {
-    email: 'kelvin_wolff95@yahoo.com',
-    password: '123456'
+    email: '',
+    password: ''
   }
 
   const schema = yup.object().shape({
@@ -39,51 +41,47 @@ const Component = ({ history }) => {
       .max(6, errorsMessages.minLength(6))
   })
 
+  const cleanAlert = () => setAlert('')
+
   const handleToken = ({ token }) => setToken(token)
   const handleUser = () => profile().then(({ data }) => setUser(data))
   const handleRedirect = () => history.push('/dashboard')
-  const showAlertError = (error) => setError(error.response.data.message)
+  const handleAlert = ({ message }) => setAlert(message)
 
-  const handleLogin = (payload) => login(payload)
-    .then(handleToken)
-    .then(handleUser)
-    .then(handleRedirect)
-    .catch(showAlertError)
-  
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
-    handleLogin(values).finally(() => actions.setSubmitting(false))
+    login(values)
+      .then(handleToken)
+      .then(handleUser)
+      .then(handleRedirect)
+      .then(actions.resetForm)
+      .catch(handleAlert)
+      .finally(() => actions.setSubmitting(false))
   }
 
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
-      <IonItem lines="none">
-        <AppLabel title="Email" error={errors.email} touched={touched.email} />
-        <IonInput
-          name="email"
-          value={values.email}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.email}
-          touched={touched.email}
-        />
-      </IonItem>
-      <IonItem lines="none">
-        <AppLabel title="Password" error={errors.password} touched={touched.password} />
-        <IonInput
-          name="password"
-          value={values.password}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.password}
-          touched={touched.password}
-        />
-      </IonItem>
-      <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
-      <IonButton routerLink="/register">Register</IonButton>
-      <IonButton routerLink="/forgot-password">Forgot Password</IonButton>
+      <AppFormItem
+        label="Email"
+        placeholder="Entre com o seu email"
+        name="email"
+        value={values.email}
+        error={errors.email}
+        touched={touched.email}
+        handleChange={handleChange}
+        Input={IonInput} />
+      <AppFormItem
+        label="Senha"
+        placeholder="Entre com a sua senha"
+        name="password"
+        value={values.password}
+        error={errors.password}
+        touched={touched.password}
+        handleChange={handleChange}
+        Input={IonInput} />
+      <IonButton type="submit" disabled={!dirty && isSubmitting}>Enviar</IonButton>
+      <IonButton routerLink="/register">Cadastro</IonButton>
+      <IonButton routerLink="/forgot-password">Esqueceu a senha ?</IonButton>
     </form>
   )
 
@@ -103,12 +101,9 @@ const Component = ({ history }) => {
           schema={schema}
           handleSubmit={handleSubmit}
           Form={Form} />
-        <IonAlert
-          isOpen={!!error}
-          onDidDismiss={setError}
-          message={error}
-          buttons={['OK']}
-        />
+        <AppAlert
+          message={alert}
+          onDidDismiss={cleanAlert} />
       </IonContent>
     </IonPage>
   )

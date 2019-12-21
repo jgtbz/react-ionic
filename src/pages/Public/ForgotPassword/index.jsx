@@ -23,8 +23,7 @@ import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const initialStep = 'sendPin'
-  const [currentStep, setCurrentStep] = useState(initialStep)
+  const [currentStep, setCurrentStep] = useState('sendPin')
   const [alert, setAlert] = useState('')
 
   const model = {
