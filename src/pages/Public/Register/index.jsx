@@ -28,20 +28,40 @@ const Component = ({ history }) => {
     confirmPassword: ''
   }
 
-  const schema = yup.object().shape({})
+  const schema = yup.object().shape({
+    name: yup
+      .string()
+      .required(errorsMessages.required),
+    email: yup
+      .string()
+      .email(errorsMessages.email)
+      .required(errorsMessages.required),
+    password: yup
+      .string()
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.minLength(6)),
+    confirmPassword: yup
+      .string()
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.minLength(6))
+      .oneOf([yup.ref('password'), null], errorsMessages.asSamePassword)
+  })
 
   const cleanAlert = () => setAlert('')
 
-  const handleAlert = ({ message }) => setAlert(message)
+  const handleSuccess = ({ message }) => setAlert(message)
+  const handleError = ({ errorsDescription }) => setAlert(errorsDescription)
   const handleRedirect = () => history.push('/login')
   
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
     createUsers(values)
-      .then(handleAlert)
+      .then(handleSuccess)
       .then(actions.resetForm)
       .then(handleRedirect)
-      .catch(handleAlert)
+      .catch(handleError)
       .finally(() => actions.setSubmitting(false))
   }
 
@@ -69,6 +89,7 @@ const Component = ({ history }) => {
         label="Senha"
         placeholder="Entre com a sua senha"
         name="password"
+        type="password"
         value={values.password}
         error={errors.password}
         touched={touched.password}
@@ -78,6 +99,7 @@ const Component = ({ history }) => {
         label="Confirme a senha"
         placeholder="Entre com o sua senha"
         name="confirmPassword"
+        type="password"
         value={values.confirmPassword}
         error={errors.confirmPassword}
         touched={touched.confirmPassword}
