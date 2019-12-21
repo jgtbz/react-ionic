@@ -1,4 +1,4 @@
-const required = 'Campo Obrigatório'
+const required = 'Campo obrigatório'
 
 const email = 'Email inválido'
 

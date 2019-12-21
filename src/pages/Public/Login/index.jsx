@@ -53,8 +53,8 @@ const Component = ({ history }) => {
     login(values)
       .then(handleToken)
       .then(handleUser)
-      .then(handleRedirect)
       .then(actions.resetForm)
+      .then(handleRedirect)
       .catch(handleAlert)
       .finally(() => actions.setSubmitting(false))
   }
@@ -74,6 +74,7 @@ const Component = ({ history }) => {
         label="Senha"
         placeholder="Entre com a sua senha"
         name="password"
+        type="password"
         value={values.password}
         error={errors.password}
         touched={touched.password}

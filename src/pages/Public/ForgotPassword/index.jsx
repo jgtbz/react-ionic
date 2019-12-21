@@ -88,14 +88,15 @@ const Component = ({ history }) => {
     .catch(handleAlert)
 
   const handleForgotPasswordValidatePin = (values) => forgotPasswordValidatePin(values)
+    .then(handleAlert)
     .then(changeCurrentStepToForgotPassword)
     .catch(handleAlert)
 
   const handleForgotPassword = (values, { resetForm }) => forgotPassword(values)
     .then(handleAlert)
-    .then(handleRedirect)
     .then(changeCurrentStepToSendPin)
     .then(resetForm)
+    .then(handleRedirect)
     .catch(handleAlert)
 
   const steps = {
@@ -133,6 +134,7 @@ const Component = ({ history }) => {
       label: 'Password',
       placeholder: 'Entre com a sua senha',
       name: 'password',
+      type: 'password',
       value: values.password,
       error: errors.password,
       touched: touched.password,
@@ -142,6 +144,7 @@ const Component = ({ history }) => {
       label: 'Confirm Password',
       placeholder: 'Confirme a sua senha',
       name: 'confirmPassword',
+      type: 'password',
       value: values.confirmPassword,
       error: errors.confirmPassword,
       touched: touched.confirmPassword,
