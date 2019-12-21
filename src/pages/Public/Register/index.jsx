@@ -11,13 +11,17 @@ import {
   IonButton,
   IonAlert
 } from '@ionic/react'
-import { AppForm, AppFormInputError, AppLabel } from '../../../components'
+import {
+  AppForm,
+  AppFormInputError,
+  AppLabel
+} from '../../../components'
 import { createUsers } from '../../../services/users'
+import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const [showSuccess, setShowSuccess] = useState(true)
-  const [showError, setShowError] = useState('')
+  const [alert, setAlert] = useState('')
 
   const model = {
     name: '',
@@ -29,29 +33,27 @@ const Component = ({ history }) => {
   const schema = yup.object().shape({
     name: yup
       .string()
-      .required('Campo obrigatório'),
+      .required(errorsMessages.required),
     email: yup
       .string()
-      .email('Email inválido')
-      .required('Campo obrigatório'),
+      .email(errorsMessages.email)
+      .required(errorsMessages.required),
     password: yup
       .string()
-      .required('Campo obrigatório')
-      .min(4, 'Mínimo de 4 caracteres')
-      .max(6, 'Máximo de 6 caracteres'),
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.maxLength(6)),
     confirmPassword: yup
       .string()
-      .required('Campo obrigatório')
-      .min(4, 'Mínimo de 4 caracteres')
-      .max(6, 'Máximo de 6 caracteres')
-      .oneOf([yup.ref('password'), null], 'Senhas não conferem')
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.maxLength(6))
+      .oneOf([yup.ref('password'), null], errorsMessages.asSamePassword)
   })
 
-  const handleSuccess = () => setShowSuccess(true)
-  const handleError = (error) => setShowError(error.response.data.message)
-  const handleRedirect = () => {
-    console.log('sdasdasd')
-  }
+  const handleSuccess = ({ message }) => setAlert(message)
+  const handleError = (error) => setAlert(error.response.data.message)
+  const handleRedirect = () => history.push('/login')
   
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
@@ -64,7 +66,7 @@ const Component = ({ history }) => {
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
       <IonItem lines="none">
-        <AppLabel title="Name" error={errors.name} />
+        <AppLabel title="Name" error={errors.name} touched={touched.name} />
         <IonInput
           name="name"
           value={values.name}
@@ -76,7 +78,7 @@ const Component = ({ history }) => {
         />
       </IonItem>
       <IonItem lines="none">
-        <AppLabel title="Email" error={errors.email} />
+        <AppLabel title="Email" error={errors.email} touched={touched.email} />
         <IonInput
           name="email"
           value={values.email}
@@ -88,7 +90,7 @@ const Component = ({ history }) => {
         />
       </IonItem>
       <IonItem lines="none">
-        <AppLabel title="Password" error={errors.password} />
+        <AppLabel title="Password" error={errors.password} touched={touched.password} />
         <IonInput
           name="password"
           value={values.password}
@@ -100,7 +102,7 @@ const Component = ({ history }) => {
         />
       </IonItem>
       <IonItem lines="none">
-        <AppLabel title="Confirm Password" error={errors.confirmPassword} />
+        <AppLabel title="Confirm Password" error={errors.confirmPassword} touched={touched.confirmPassword} />
         <IonInput
           name="confirmPassword"
           value={values.confirmPassword}
@@ -115,6 +117,13 @@ const Component = ({ history }) => {
       <IonButton routerLink="/login">Login</IonButton>
     </form>
   )
+
+  const alertButtons = [
+    {
+      text: 'Ok',
+      handler: handleRedirect
+    }
+  ]
 
   return (
     <IonPage>
@@ -133,17 +142,10 @@ const Component = ({ history }) => {
           handleSubmit={handleSubmit}
           Form={Form} />
         <IonAlert
-          isOpen={!!showSuccess}
-          onDidDismiss={setShowSuccess}
-          onDidPresent={handleRedirect}
-          message={'Success'}
-          buttons={['OK']}
-        />
-        <IonAlert
-          isOpen={!!showError}
-          onDidDismiss={setShowError}
-          message={showError}
-          buttons={['OK']}
+          isOpen={!!alert}
+          onDidDismiss={setAlert}
+          message={alert}
+          buttons={alertButtons}
         />
       </IonContent>
     </IonPage>

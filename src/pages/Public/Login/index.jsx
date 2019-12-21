@@ -15,11 +15,12 @@ import { AppForm, AppFormInputError, AppLabel } from '../../../components'
 import { login } from '../../../services/auth'
 import { profile } from '../../../services/users'
 import { useAuthentication } from '../../../store'
+import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
   const { setToken, setUser } = useAuthentication()
-  const [showError, setShowError] = useState('')
+  const [error, setError] = useState('')
 
   const model = {
     email: 'kelvin_wolff95@yahoo.com',
@@ -29,19 +30,19 @@ const Component = ({ history }) => {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .email('Email inválido')
-      .required('Campo obrigatório'),
+      .email(errorsMessages.email)
+      .required(errorsMessages.required),
     password: yup
       .string()
-      .required('Campo obrigatório')
-      .min(4, 'Mínimo de 4 caracteres')
-      .max(6, 'Máximo de 6 caracteres')
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.minLength(6))
   })
 
-  const handleToken = ({ data }) => setToken(data.token)
-  const handleUser = () => profile().then(({ data }) => setUser(data.data))
+  const handleToken = ({ token }) => setToken(token)
+  const handleUser = () => profile().then(({ data }) => setUser(data))
   const handleRedirect = () => history.push('/dashboard')
-  const showAlertError = (error) => setShowError(error.response.data.message)
+  const showAlertError = (error) => setError(error.response.data.message)
 
   const handleLogin = (payload) => login(payload)
     .then(handleToken)
@@ -57,7 +58,7 @@ const Component = ({ history }) => {
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
       <IonItem lines="none">
-        <AppLabel title="Email" error={errors.email} />
+        <AppLabel title="Email" error={errors.email} touched={touched.email} />
         <IonInput
           name="email"
           value={values.email}
@@ -69,7 +70,7 @@ const Component = ({ history }) => {
         />
       </IonItem>
       <IonItem lines="none">
-        <AppLabel title="Password" error={errors.password} />
+        <AppLabel title="Password" error={errors.password} touched={touched.password} />
         <IonInput
           name="password"
           value={values.password}
@@ -103,9 +104,9 @@ const Component = ({ history }) => {
           handleSubmit={handleSubmit}
           Form={Form} />
         <IonAlert
-          isOpen={!!showError}
-          onDidDismiss={setShowError}
-          message={showError}
+          isOpen={!!error}
+          onDidDismiss={setError}
+          message={error}
           buttons={['OK']}
         />
       </IonContent>
