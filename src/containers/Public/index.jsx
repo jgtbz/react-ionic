@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { IonContent, IonRouterOutlet } from '@ionic/react'
+import { IonRouterOutlet } from '@ionic/react'
 import {
   Presentation,
   Login,
@@ -9,15 +9,13 @@ import {
 } from '../../pages/Public'
 
 const Component = () => (
-  <IonContent>
-    <IonRouterOutlet id="main">
-      <Route path="/presentation" component={Presentation} />
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <Route path="/forgot-password" component={ForgotPassword} />
-      <Route path="/" render={() => <Redirect to="/presentation" /> } />
-    </IonRouterOutlet>
-  </IonContent>
+  <IonRouterOutlet id="main">
+    <Route path="/presentation" component={Presentation} exact />
+    <Route path="/login" component={Login} exact />
+    <Route path="/register" component={Register} exact />
+    <Route path="/forgot-password" component={ForgotPassword} exact />
+    <Route path="/" render={() => <Redirect to="/presentation" /> } exact />
+  </IonRouterOutlet>
 )
 
 export default Component

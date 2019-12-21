@@ -51,13 +51,13 @@ const Component = ({ location }) => {
   return (
     <IonTabs>
       <IonRouterOutlet id="main">
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/page1" component={Page1} />
-        <Route path="/page11" component={Page11} />
-        <Route path="/page2" component={Page2} />
-        <Route path="/page3" component={Page3} />
-        <Route path="/page4" component={Page4} />
-        <Route path="/" render={() => <Redirect to="/dashboard" /> } />
+        <Route path="/dashboard" component={Dashboard} exact />
+        <Route path="/page1" component={Page1} exact />
+        <Route path="/page11" component={Page11} exact />
+        <Route path="/page2" component={Page2} exact />
+        <Route path="/page3" component={Page3} exact />
+        <Route path="/page4" component={Page4} exact />
+        <Route path="/" render={() => <Redirect to="/dashboard" /> } exact />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         {tabs.map((item, index) => (

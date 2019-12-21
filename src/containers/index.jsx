@@ -6,8 +6,6 @@ import { useAuthentication } from '../store'
 const Component = () => {
   const { isLogged } = useAuthentication()
 
-  console.log({ isLogged })
-  
   const Container = isLogged
     ? Secure
     : Public
