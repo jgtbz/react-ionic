@@ -170,7 +170,7 @@ const Component = ({ history }) => {
             handleChange={handleChange}
             {...field} />
         ))}
-        <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
+        <IonButton type="submit" disabled={!dirty && isSubmitting}>Enviar</IonButton>
         <IonButton routerLink="/login">Login</IonButton>
       </form>
     )
@@ -186,7 +186,7 @@ const Component = ({ history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <h3>Forgot Password</h3>
+        <h3>Redefina sua senha</h3>
         <AppForm
           model={model}
           schema={schema}

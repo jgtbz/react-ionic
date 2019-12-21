@@ -21,7 +21,7 @@ const Component = () => (
           <div>
             <h1>Slide 3</h1>
             <IonButton routerLink="/login">Login</IonButton>
-            <IonButton routerLink="/register">Register</IonButton>
+            <IonButton routerLink="/register">Cadastro</IonButton>
           </div>
         </IonSlide>
       </IonSlides>
