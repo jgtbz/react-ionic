@@ -6,15 +6,13 @@ import {
   IonButtons,
   IonBackButton,
   IonContent,
-  IonItem,
   IonInput,
   IonButton,
   IonAlert
 } from '@ionic/react'
 import {
   AppForm,
-  AppFormInputError,
-  AppLabel
+  AppFormItem
 } from '../../../components'
 import {
   forgotPasswordSendPin,
@@ -25,7 +23,8 @@ import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const [currentStep, setCurrentStep] = useState('sendPin')
+  const initialStep = 'sendPin'
+  const [currentStep, setCurrentStep] = useState(initialStep)
   const [alert, setAlert] = useState('')
 
   const model = {
@@ -100,70 +99,50 @@ const Component = ({ history }) => {
     validatePin: handleForgotPasswordValidatePin,
     forgotPassword: handleForgotPassword
   }
+  const step = steps[currentStep]
 
   const handleSubmit = (values, actions) => {
-    const step = steps[currentStep]
     actions.setSubmitting(true)
     step(values).finally(() => actions.setSubmitting(false))
   }
 
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => {
-    const emailField = (
-      <IonItem lines="none">
-      <AppLabel title="Email" error={errors.email} touched={touched.email} />
-      <IonInput
-        name="email"
-        value={values.email}
-        onIonInput={handleChange}
-      />
-      <AppFormInputError
-        error={errors.email}
-        touched={touched.email}
-      />
-    </IonItem>
-    )
-    const codeField = (
-      <IonItem lines="none">
-        <AppLabel title="Code" error={errors.code} touched={touched.code} />
-        <IonInput
-          name="code"
-          value={values.code}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.code}
-          touched={touched.code}
-        />
-      </IonItem>
-    )
-    const passwordField = (
-      <IonItem lines="none">
-        <AppLabel title="Password" error={errors.password} touched={touched.password} />
-        <IonInput
-          name="password"
-          value={values.password}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.password}
-          touched={touched.password}
-        />
-      </IonItem>
-    )
-    const confirmPasswordField = (
-      <IonItem lines="none">
-        <AppLabel title="Confirm Password" error={errors.confirmPassword} touched={touched.confirmPassword} />
-        <IonInput
-          name="confirmPassword"
-          value={values.confirmPassword}
-          onIonInput={handleChange}
-        />
-        <AppFormInputError
-          error={errors.confirmPassword}
-          touched={touched.confirmPassword}
-        />
-      </IonItem>
-    )
+    const emailField = {
+      label: 'Email',
+      placeholder: '',
+      name: 'email',
+      value: values.email,
+      error: errors.email,
+      touched: touched.email,
+      input: IonInput
+    }
+    const codeField = {
+      label: 'Code',
+      placeholder: '',
+      name: 'code',
+      value: values.code,
+      error: errors.code,
+      touched: touched.code,
+      input: IonInput
+    }
+    const passwordField = {
+      label: 'Password',
+      placeholder: '',
+      name: 'password',
+      value: values.password,
+      error: errors.password,
+      touched: touched.password,
+      input: IonInput
+    }
+    const confirmPasswordField = {
+      label: 'Confirm Password',
+      placeholder: '',
+      name: 'confirmPassword',
+      value: values.confirmPassword,
+      error: errors.confirmPassword,
+      touched: touched.confirmPassword,
+      input: IonInput
+    }
 
     const stepsFields = {
       sendPin: [
@@ -177,12 +156,22 @@ const Component = ({ history }) => {
         confirmPasswordField
       ]
     }
-
     const fields = stepsFields[currentStep]
 
     return (
       <form onSubmit={handleSubmit}>
-        {fields.map((Field, index) => <Field key={index} />)}
+        {fields.map((field, index) => (
+          <AppFormItem
+            key={index}
+            label={field.label}
+            placeholder={field.placeholder}
+            name={field.name}
+            value={field.value}
+            error={field.error}
+            touched={field.touched}
+            Input={field.input}
+            handleChange={handleChange} />
+        ))}
         <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
         <IonButton routerLink="/login">Login</IonButton>
       </form>
