@@ -7,12 +7,12 @@ import {
   IonBackButton,
   IonContent,
   IonInput,
-  IonButton,
-  IonAlert
+  IonButton
 } from '@ionic/react'
 import {
   AppForm,
-  AppFormItem
+  AppFormItem,
+  AppAlert
 } from '../../../components'
 import {
   forgotPasswordSendPin,
@@ -77,22 +77,24 @@ const Component = ({ history }) => {
   const changeCurrentStepToValidatePin = changeCurrentStep('validatePin')
   const changeCurrentStepToForgotPassword = changeCurrentStep('forgotPassword')
 
-  const handleValidatePinSuccess = ({ message }) => setAlert(message)
-  const handleError = (error) => setAlert(error.response.data.message)
+  const cleanAlert = () => setAlert('')
+
+  const handleAlert = ({ message }) => setAlert(message)
   const handleRedirect = () => history.push('/login')
   
   const handleForgotPasswordSendPin = (values) => forgotPasswordSendPin(values)
-    .then(handleValidatePinSuccess)
+    .then(handleAlert)
     .then(changeCurrentStepToValidatePin)
-    .catch(handleError)
+    .catch(handleAlert)
 
   const handleForgotPasswordValidatePin = (values) => forgotPasswordValidatePin(values)
     .then(changeCurrentStepToForgotPassword)
-    .catch(handleError)
+    .catch(handleAlert)
 
   const handleForgotPassword = (values) => forgotPassword(values)
+    .then(handleAlert)
     .then(handleRedirect)
-    .catch(handleError)
+    .catch(handleAlert)
 
   const steps = {
     sendPin: handleForgotPasswordSendPin,
@@ -109,7 +111,7 @@ const Component = ({ history }) => {
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => {
     const emailField = {
       label: 'Email',
-      placeholder: '',
+      placeholder: 'Entre com o seu email',
       name: 'email',
       value: values.email,
       error: errors.email,
@@ -118,7 +120,7 @@ const Component = ({ history }) => {
     }
     const codeField = {
       label: 'Code',
-      placeholder: '',
+      placeholder: 'Entre com o código',
       name: 'code',
       value: values.code,
       error: errors.code,
@@ -127,7 +129,7 @@ const Component = ({ history }) => {
     }
     const passwordField = {
       label: 'Password',
-      placeholder: '',
+      placeholder: 'Entre com a sua senha',
       name: 'password',
       value: values.password,
       error: errors.password,
@@ -136,7 +138,7 @@ const Component = ({ history }) => {
     }
     const confirmPasswordField = {
       label: 'Confirm Password',
-      placeholder: '',
+      placeholder: 'Confirme a sua senha',
       name: 'confirmPassword',
       value: values.confirmPassword,
       error: errors.confirmPassword,
@@ -194,12 +196,9 @@ const Component = ({ history }) => {
           schema={schema}
           handleSubmit={handleSubmit}
           Form={Form} />
-        <IonAlert
-          isOpen={!!alert}
-          onDidDismiss={setAlert}
+        <AppAlert
           message={alert}
-          buttons={['OK']}
-        />
+          onDidDismiss={cleanAlert} />
       </IonContent>
     </IonPage>
   )

@@ -26,7 +26,7 @@ http.interceptors.response.use(
     // if (status === 401) {
     //   // Logout
     // }
-    return Promise.reject(error)
+    return Promise.reject(error.response.data)
   })
 
 export default http
