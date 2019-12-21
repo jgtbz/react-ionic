@@ -74,6 +74,7 @@ const Component = ({ history }) => {
 
   const changeCurrentStep = (value) => () => setCurrentStep(value)
 
+  const changeCurrentStepToSendPin = changeCurrentStep('sendPin')
   const changeCurrentStepToValidatePin = changeCurrentStep('validatePin')
   const changeCurrentStepToForgotPassword = changeCurrentStep('forgotPassword')
 
@@ -91,9 +92,11 @@ const Component = ({ history }) => {
     .then(changeCurrentStepToForgotPassword)
     .catch(handleAlert)
 
-  const handleForgotPassword = (values) => forgotPassword(values)
+  const handleForgotPassword = (values, { resetForm }) => forgotPassword(values)
     .then(handleAlert)
     .then(handleRedirect)
+    .then(changeCurrentStepToSendPin)
+    .then(resetForm)
     .catch(handleAlert)
 
   const steps = {
@@ -105,7 +108,7 @@ const Component = ({ history }) => {
 
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
-    step(values).finally(() => actions.setSubmitting(false))
+    step(values, actions).finally(() => actions.setSubmitting(false))
   }
 
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => {
@@ -116,7 +119,7 @@ const Component = ({ history }) => {
       value: values.email,
       error: errors.email,
       touched: touched.email,
-      input: IonInput
+      Input: IonInput
     }
     const codeField = {
       label: 'Code',
@@ -125,7 +128,7 @@ const Component = ({ history }) => {
       value: values.code,
       error: errors.code,
       touched: touched.code,
-      input: IonInput
+      Input: IonInput
     }
     const passwordField = {
       label: 'Password',
@@ -134,7 +137,7 @@ const Component = ({ history }) => {
       value: values.password,
       error: errors.password,
       touched: touched.password,
-      input: IonInput
+      Input: IonInput
     }
     const confirmPasswordField = {
       label: 'Confirm Password',
@@ -143,7 +146,7 @@ const Component = ({ history }) => {
       value: values.confirmPassword,
       error: errors.confirmPassword,
       touched: touched.confirmPassword,
-      input: IonInput
+      Input: IonInput
     }
 
     const stepsFields = {
@@ -165,14 +168,8 @@ const Component = ({ history }) => {
         {fields.map((field, index) => (
           <AppFormItem
             key={index}
-            label={field.label}
-            placeholder={field.placeholder}
-            name={field.name}
-            value={field.value}
-            error={field.error}
-            touched={field.touched}
-            Input={field.input}
-            handleChange={handleChange} />
+            handleChange={handleChange}
+            {...field} />
         ))}
         <IonButton type="submit" disabled={!dirty && isSubmitting}>Submit</IonButton>
         <IonButton routerLink="/login">Login</IonButton>
