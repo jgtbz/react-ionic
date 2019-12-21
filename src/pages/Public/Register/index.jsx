@@ -51,17 +51,16 @@ const Component = ({ history }) => {
 
   const cleanAlert = () => setAlert('')
 
-  const handleSuccess = ({ message }) => setAlert(message)
-  const handleError = ({ errorsDescription }) => setAlert(errorsDescription)
+  const handleAlert = ({ message }) => setAlert(message)
   const handleRedirect = () => history.push('/login')
   
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
     createUsers(values)
-      .then(handleSuccess)
+      .then(handleAlert)
       .then(actions.resetForm)
       .then(handleRedirect)
-      .catch(handleError)
+      .catch(handleAlert)
       .finally(() => actions.setSubmitting(false))
   }
 

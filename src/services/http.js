@@ -1,5 +1,5 @@
-// import { useAuthentication, store } from '../store'
 import { store } from '../store'
+import errorsMessage from '../support/errorsMessage'
 import axios from 'axios'
 import { concat } from 'ramda'
 
@@ -12,7 +12,6 @@ const http = axios.create({
 
 http.interceptors.request.use(
   request => {
-    // const { token } = useAuthentication()
     const token = store.get().token
     console.log({ token })
     request.headers.Authorization = token && concat('Bearer ', token)
@@ -22,11 +21,8 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   response => response && response.data,
   error => {
-    // const { status } = error.response
-    // if (status === 401) {
-    //   // Logout
-    // }
-    return Promise.reject(error.response.data)
+    const message = errorsMessage(error.response.data.errors)
+    return Promise.reject({ message })
   })
 
 export default http
