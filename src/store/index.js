@@ -1,2 +1,4 @@
-export { default as useAuthentication } from './useAuthentication'
-export { default as useStore, store } from './useStore'
+export { StateContext, StateProvider, useStateValue } from './state'
+export { default as reducer } from './reducer'
+export { default as initialState } from './initialState'
+export { getToken, setToken } from './persistence'

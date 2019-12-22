@@ -1,10 +1,10 @@
 import React from 'react'
 import Public from './Public'
 import Secure from './Secure'
-import { useAuthentication } from '../store'
+import { useStateValue } from '../store'
 
 const Component = () => {
-  const { isLogged } = useAuthentication()
+  const [{ isLogged }] = useStateValue()
 
   const Container = isLogged
     ? Secure

@@ -14,19 +14,18 @@ import {
   AppFormItem,
   AppAlert
 } from '../../../components'
-import { login } from '../../../services/auth'
-import { profile } from '../../../services/users'
-import { useAuthentication } from '../../../store'
+import { login, profile } from '../../../services/users'
+import { useStateValue, setToken } from '../../../store'
 import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const { setToken, setUser } = useAuthentication()
+  const [, dispatch] = useStateValue()
   const [alert, setAlert] = useState('')
 
   const model = {
-    email: '',
-    password: ''
+    email: 'kelvin_wolff95@yahoo.com',
+    password: '123123'
   }
 
   const schema = yup.object().shape({
@@ -43,8 +42,11 @@ const Component = ({ history }) => {
 
   const cleanAlert = () => setAlert('')
 
-  const handleToken = ({ token }) => setToken(token)
-  const handleUser = () => profile().then(({ data }) => setUser(data))
+  const handleToken = ({ token }) => {
+    setToken(token)
+    dispatch({ type: 'setLogged' })
+  }
+  const handleUser = () => profile().then(({ data }) => dispatch({ type: 'setUser', user: data }))
   const handleRedirect = () => history.push('/dashboard')
   const handleAlert = ({ message }) => setAlert(message)
 

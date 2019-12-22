@@ -12,10 +12,16 @@ import {
   IonIcon
 } from '@ionic/react'
 import { power } from 'ionicons/icons'
-import { useAuthentication } from '../../../store'
+import { useStateValue } from '../../../store'
 
-const Component = () => {
-  const { logout } = useAuthentication()
+const Component = ({ history }) => {
+  const [{user}, dispatch] = useStateValue()
+  
+  const logout = () => {
+    dispatch({ type: 'setLogout' })
+    history.push('/presentation')
+  } // refactor
+
   return (
     <IonPage>
       <IonHeader>
@@ -33,6 +39,7 @@ const Component = () => {
           </IonFabButton>
         </IonFab>
         <h3>Dashboard Here</h3>
+        {JSON.stringify(user)}
       </IonContent>
     </IonPage>
   )

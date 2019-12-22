@@ -1,4 +1,4 @@
-import { store } from '../store'
+import { getToken } from '../store'
 import errorsMessage from '../support/errorsMessage'
 import axios from 'axios'
 import { concat } from 'ramda'
@@ -13,7 +13,7 @@ const http = axios.create({
 
 http.interceptors.request.use(
   request => {
-    const token = store.get().token
+    const token = getToken()
     request.headers.Authorization = token && concat('Bearer ', token)
     return Promise.resolve(request)
   })

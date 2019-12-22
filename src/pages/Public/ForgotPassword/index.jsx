@@ -18,7 +18,7 @@ import {
   forgotPasswordSendPin,
   forgotPasswordValidatePin,
   forgotPassword
-} from '../../../services/auth'
+} from '../../../services/users'
 import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
