@@ -21,8 +21,9 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   response => response && response.data,
   error => {
-    const message = errorsMessage(error.response.data.errors)
-    return Promise.reject({ message })
+    const { message, errors = [] } = error.response.data
+    const errorMessage = errorsMessage(errors)
+    return Promise.reject({ message: errorMessage || message })
   })
 
 export default http
