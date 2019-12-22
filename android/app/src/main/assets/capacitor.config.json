@@ -1,0 +1,8 @@
+{
+  "appId": "com.basic.app",
+  "appName": "basic",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build",
+  "cordova": {}
+}
