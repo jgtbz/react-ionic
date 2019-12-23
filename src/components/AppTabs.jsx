@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import {
   IonRouterOutlet,
@@ -16,38 +16,20 @@ import {
   Page3,
   Page4
 } from '../pages/Secure'
-import { home } from 'ionicons/icons'
+import { tabsItems, withTabs } from '../modules/containers'
 import { equals } from 'ramda'
 
-const tabs = [
-  {
-    title: 'Page 1',
-    tab: 'page1',
-    url: '/page1',
-    icon: home
-  },
-  {
-    title: 'Page 2',
-    tab: 'page2',
-    url: '/page2',
-    icon: home
-  },
-  {
-    title: 'Page 3',
-    tab: 'page3',
-    url: '/page3',
-    icon: home
-  },
-  {
-    title: 'Page 4',
-    tab: 'page4',
-    url: '/page4',
-    icon: home
-  }
-]
-
 const Component = ({ location }) => {
+  const [showTabBar, setShowTabBar] = useState(false)
+
+  useEffect(() => {
+    setShowTabBar(withTabs.includes(location.pathname))
+  }, [location.pathname])
+
   const isSelected = (url) => equals(url, location.pathname)
+
+  const tabBarStyles = { display: showTabBar ? 'flex' : 'none' }
+
   return (
     <IonTabs>
       <IonRouterOutlet id="main">
@@ -59,8 +41,8 @@ const Component = ({ location }) => {
         <Route path="/page4" component={Page4} exact />
         <Route path="/" render={() => <Redirect to="/dashboard" /> } exact />
       </IonRouterOutlet>
-      <IonTabBar slot="bottom">
-        {tabs.map((item, index) => (
+      <IonTabBar slot="bottom" style={tabBarStyles}>
+        {tabsItems.map((item, index) => (
           <IonTabButton key={index} tab={item.tab} href={item.url} selected={isSelected(item.url)}>
             <IonIcon icon={item.icon} />
             <IonLabel>{item.title}</IonLabel>
