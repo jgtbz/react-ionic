@@ -1,4 +1,4 @@
-import { home, map } from 'ionicons/icons'
+import { home } from 'ionicons/icons'
 
 const menuItems = [
   {
@@ -61,5 +61,7 @@ const withTabs = [
 ]
 
 export {
-  menuItems
+  menuItems,
+  tabsItems,
+  withTabs
 }

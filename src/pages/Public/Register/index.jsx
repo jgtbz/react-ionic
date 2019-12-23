@@ -96,7 +96,7 @@ const Component = ({ history }) => {
         Input={IonInput} />
       <AppFormItem
         label="Confirme a senha"
-        placeholder="Entre com o sua senha"
+        placeholder="Confirme a sua senha"
         name="confirmPassword"
         type="password"
         value={values.confirmPassword}
