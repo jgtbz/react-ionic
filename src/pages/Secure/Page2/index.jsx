@@ -4,7 +4,7 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonBackButton,
+  IonMenuButton,
   IonTitle,
   IonContent
 } from '@ionic/react'
@@ -15,7 +15,7 @@ const Component = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton />
+            <IonMenuButton />
           </IonButtons>
           <IonTitle>Page 2</IonTitle>
         </IonToolbar>

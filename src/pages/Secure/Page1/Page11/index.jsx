@@ -17,7 +17,7 @@ const Component = () => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>Page 11</IonTitle>
+          <IonTitle>Page 1.1</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

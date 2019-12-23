@@ -2,9 +2,9 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react'
 
 const localState = JSON.parse(localStorage.getItem('state'))
 
-export const StateContext = createContext()
+const StateContext = createContext()
 
-export const StateProvider = ({ reducer, initialState, children }) => {
+const StateProvider = ({ reducer, initialState, children }) => {
   const [state, dispatch] = useReducer(reducer, localState || initialState)
 
   useEffect(() => {
@@ -18,4 +18,9 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   )
 }
 
-export const useStateValue = () => useContext(StateContext)
+const useStateValue = () => useContext(StateContext)
+
+export {
+  StateProvider,
+  useStateValue
+}

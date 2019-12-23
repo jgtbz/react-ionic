@@ -6,10 +6,14 @@ import {
   IonButtons,
   IonMenuButton,
   IonTitle,
-  IonContent
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from '@ionic/react'
+import { power } from 'ionicons/icons'
 
-const Component = () => {
+const Component = ({ history }) => {
   return (
     <IonPage>
       <IonHeader>
@@ -21,6 +25,11 @@ const Component = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonFab vertical="top" horizontal="end">
+          <IonFabButton onClick={() => history.push('/page11')}>
+            <IonIcon icon={power} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   )

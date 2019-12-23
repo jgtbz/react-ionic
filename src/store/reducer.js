@@ -1,7 +1,14 @@
 import initialState from './initialState'
+import { setToken as storeToken } from './persistence'
 
 const setUser = (state, { user }) => ({ ...state, user })
-const setLogged = (state) => ({ ...state, isLogged: true })
+const setToken = (state, { token }) => {
+  storeToken(token)
+  return {
+    ...state,
+    isLogged: true
+  }
+}
 const setLogout = (state) => ({
   ...state,
   ...initialState
@@ -9,7 +16,7 @@ const setLogout = (state) => ({
 
 const reducers = {
   setUser,
-  setLogged,
+  setToken,
   setLogout
 }
 

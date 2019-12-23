@@ -15,7 +15,7 @@ import {
   AppAlert
 } from '../../../components'
 import { login, profile } from '../../../services/users'
-import { useStateValue, setToken } from '../../../store'
+import { useStateValue } from '../../../store'
 import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
@@ -42,10 +42,7 @@ const Component = ({ history }) => {
 
   const cleanAlert = () => setAlert('')
 
-  const handleToken = ({ token }) => {
-    setToken(token)
-    dispatch({ type: 'setLogged' })
-  }
+  const handleToken = ({ token }) => dispatch({ type: 'setToken', token })
   const handleUser = () => profile().then(({ data }) => dispatch({ type: 'setUser', user: data }))
   const handleRedirect = () => history.push('/dashboard')
   const handleAlert = ({ message }) => setAlert(message)

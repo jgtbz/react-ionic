@@ -38,7 +38,6 @@ const Component = ({ history }) => {
             <IonIcon icon={power} />
           </IonFabButton>
         </IonFab>
-        <h3>Dashboard Here</h3>
         {JSON.stringify(user)}
       </IonContent>
     </IonPage>
