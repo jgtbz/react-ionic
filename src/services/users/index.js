@@ -1,20 +1,56 @@
 import http from '../http'
 
-const login = (payload) => http.post('/users/login', payload)
+const useApi = false
 
-const forgotPasswordSendPin = (payload) => http.patch('/users/forgot-password/send-pin', payload)
+const login = (payload) => useApi
+  ? http.post('/users/login', payload)
+  : new Promise((resolve) => resolve({
+    token: 'Token'
+  }))
 
-const forgotPasswordValidatePin = (payload) => http.patch('/users/forgot-password/validate-pin', payload)
+const forgotPasswordSendPin = (payload) => useApi
+  ? http.patch('/users/forgot-password/send-pin', payload)
+  : new Promise((resolve) => resolve({
+    message: 'Enviamos um código para o seu email'
+  }))
 
-const forgotPassword = (payload) => http.patch('/users/forgot-password', payload)
+const forgotPasswordValidatePin = (payload) => useApi
+  ? http.patch('/users/forgot-password/validate-pin', payload)
+  : new Promise((resolve) => resolve({
+    message: 'Código válido'
+  }))
 
-const profile = () => http.get('/users/profile')
+const forgotPassword = (payload) => useApi
+  ? http.patch('/users/forgot-password', payload)
+  : new Promise((resolve) => resolve({
+    message: 'Senha alterada com sucesso'
+  }))
 
-const createUsers = (payload) => http.post('/users', payload)
+const profile = () => useApi
+  ? http.get('/users/profile')
+  : new Promise((resolve) => resolve({
+    data: {
+      name: 'User Name'
+    }
+  }))
 
-const updateUsers = (id, payload) => http.patch(`/users/${id}`, payload)
+const createUsers = (payload) => useApi
+  ? http.post('/users', payload)
+  : new Promise((resolve) => resolve({
+    message: 'Cadastro realizado com sucesso'
+  }))
 
-const updatePassword = (id, payload) => http.patch(`/users/password/${id}`, payload)
+const updateUsers = (id, payload) => useApi
+  ? http.patch(`/users/${id}`, payload)
+  : new Promise((resolve) => resolve({
+    message: 'Dados atualizados com sucesso'
+  }))
+
+const updatePassword = (id, payload) => useApi
+  ? http.patch(`/users/password/${id}`, payload)
+  : new Promise((resolve) => resolve({
+    message: 'Senha alterada com sucesso'
+  }))
 
 export {
   login,
