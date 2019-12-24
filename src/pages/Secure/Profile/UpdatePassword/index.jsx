@@ -5,55 +5,58 @@ import {
   IonToolbar,
   IonButtons,
   IonBackButton,
+  IonTitle,
   IonContent,
   IonInput,
-  IonButton,
+  IonButton
 } from '@ionic/react'
 import {
   AppForm,
   AppFormItem,
   AppAlert
-} from '../../../components'
-import { login, profile } from '../../../services/users'
-import { useStateValue } from '../../../store'
-import { errorsMessages } from '../../../support/validators'
+} from '../../../../components'
+import { updatePassword } from '../../../../services/users'
+import { errorsMessages } from '../../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const [, dispatch] = useStateValue()
   const [alert, setAlert] = useState('')
 
   const model = {
-    email: 'kelvin_wolff95@yahoo.com',
-    password: '123123'
+    currentPassowrd: '',
+    password: '',
+    confirmPassword: ''
   }
 
   const schema = yup.object().shape({
-    email: yup
+    currentPassowrd: yup
       .string()
-      .email(errorsMessages.email)
-      .required(errorsMessages.required),
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.minLength(6)),
     password: yup
       .string()
       .required(errorsMessages.required)
       .min(4, errorsMessages.minLength(4))
-      .max(6, errorsMessages.maxLength(6))
+      .max(6, errorsMessages.minLength(6)),
+    confirmPassword: yup
+      .string()
+      .required(errorsMessages.required)
+      .min(4, errorsMessages.minLength(4))
+      .max(6, errorsMessages.minLength(6))
+      .oneOf([yup.ref('password'), null], errorsMessages.asSamePassword)
   })
 
   const cleanAlert = () => setAlert('')
 
-  const handleToken = ({ token }) => dispatch({ type: 'setToken', token })
-  const handleUser = () => profile().then(({ data }) => dispatch({ type: 'setUser', user: data }))
-  const handleRedirect = () => history.push('/dashboard')
   const handleAlert = ({ message }) => setAlert(message)
-
+  const handleRedirect = () => history.goBack()
+  
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
-    login(values)
-      .then(handleToken)
-      .then(handleUser)
+    updatePassword(values)
+      .then(handleAlert)
       .then(actions.resetForm)
-      .then(handleRedirect)
       .catch(handleAlert)
       .finally(() => actions.setSubmitting(false))
   }
@@ -61,17 +64,18 @@ const Component = ({ history }) => {
   const Form = ({ handleSubmit, values, errors, touched, isSubmitting, dirty, handleChange }) => (
     <form onSubmit={handleSubmit}>
       <AppFormItem
-        label="Email"
-        placeholder="Entre com o seu email"
-        name="email"
-        value={values.email}
-        error={errors.email}
-        touched={touched.email}
+        label="Senha atual"
+        placeholder="Entre com a sua senha atual"
+        name="currentPassowrd"
+        type="password"
+        value={values.currentPassowrd}
+        error={errors.currentPassowrd}
+        touched={touched.password}
         handleChange={handleChange}
         Input={IonInput} />
       <AppFormItem
-        label="Senha"
-        placeholder="Entre com a sua senha"
+        label="Nova senha"
+        placeholder="Entre com a sua nova senha"
         name="password"
         type="password"
         value={values.password}
@@ -79,11 +83,26 @@ const Component = ({ history }) => {
         touched={touched.password}
         handleChange={handleChange}
         Input={IonInput} />
+      <AppFormItem
+        label="Confirme a senha"
+        placeholder="Confirme a sua senha"
+        name="confirmPassword"
+        type="password"
+        value={values.confirmPassword}
+        error={errors.confirmPassword}
+        touched={touched.confirmPassword}
+        handleChange={handleChange}
+        Input={IonInput} />
       <IonButton type="submit" disabled={!dirty && isSubmitting}>Enviar</IonButton>
-      <IonButton routerLink="/register">Cadastro</IonButton>
-      <IonButton routerLink="/forgot-password">Esqueceu a senha ?</IonButton>
     </form>
   )
+
+  const alertButtons = [
+    {
+      text: 'Ok',
+      handler: handleRedirect
+    }
+  ]
 
   return (
     <IonPage>
@@ -92,10 +111,10 @@ const Component = ({ history }) => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/presentation" />
           </IonButtons>
+          <IonTitle>Alterar senha</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <h3>Login</h3>
         <AppForm
           model={model}
           schema={schema}
@@ -103,6 +122,7 @@ const Component = ({ history }) => {
           Form={Form} />
         <AppAlert
           message={alert}
+          buttons={alertButtons}
           onDidDismiss={cleanAlert} />
       </IonContent>
     </IonPage>

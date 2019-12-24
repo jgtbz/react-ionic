@@ -40,12 +40,12 @@ const Component = ({ history }) => {
       .string()
       .required(errorsMessages.required)
       .min(4, errorsMessages.minLength(4))
-      .max(6, errorsMessages.minLength(6)),
+      .max(6, errorsMessages.maxLength(6)),
     confirmPassword: yup
       .string()
       .required(errorsMessages.required)
       .min(4, errorsMessages.minLength(4))
-      .max(6, errorsMessages.minLength(6))
+      .max(6, errorsMessages.maxLength(6))
       .oneOf([yup.ref('password'), null], errorsMessages.asSamePassword)
   })
 
@@ -59,7 +59,6 @@ const Component = ({ history }) => {
     createUsers(values)
       .then(handleAlert)
       .then(actions.resetForm)
-      .then(handleRedirect)
       .catch(handleAlert)
       .finally(() => actions.setSubmitting(false))
   }
@@ -109,6 +108,13 @@ const Component = ({ history }) => {
     </form>
   )
 
+  const alertButtons = [
+    {
+      text: 'Ok',
+      handler: handleRedirect
+    }
+  ]
+
   return (
     <IonPage>
       <IonHeader>
@@ -127,6 +133,7 @@ const Component = ({ history }) => {
           Form={Form} />
         <AppAlert
           message={alert}
+          buttons={alertButtons}
           onDidDismiss={cleanAlert} />
       </IonContent>
     </IonPage>

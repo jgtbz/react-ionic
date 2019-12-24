@@ -10,6 +10,8 @@ import {
 } from '@ionic/react'
 import {
   Dashboard,
+  Profile,
+  UpdatePassword,
   Page1,
   Page11,
   Page2,
@@ -34,6 +36,8 @@ const Component = ({ location }) => {
     <IonTabs>
       <IonRouterOutlet id="main">
         <Route path="/dashboard" component={Dashboard} exact />
+        <Route path="/profile" component={Profile} exact />
+        <Route path="/updatePassword" component={UpdatePassword} exact />
         <Route path="/page1" component={Page1} exact />
         <Route path="/page11" component={Page11} exact />
         <Route path="/page2" component={Page2} exact />

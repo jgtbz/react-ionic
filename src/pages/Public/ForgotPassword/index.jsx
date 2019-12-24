@@ -179,6 +179,13 @@ const Component = ({ history }) => {
     )
   }
 
+  const alertButtons = [
+    {
+      text: 'Ok',
+      handler: currentStep === 'forgotPassword' ? handleRedirect : cleanAlert
+    }
+  ]
+
   return (
     <IonPage>
       <IonHeader>
@@ -197,6 +204,7 @@ const Component = ({ history }) => {
           Form={Form} />
         <AppAlert
           message={alert}
+          buttons={alertButtons}
           onDidDismiss={cleanAlert} />
       </IonContent>
     </IonPage>
