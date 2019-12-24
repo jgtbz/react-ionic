@@ -18,9 +18,9 @@ const StateProvider = ({ reducer, initialState, children }) => {
   )
 }
 
-const useStateValue = () => useContext(StateContext)
+const useStore = () => useContext(StateContext)
 
 export {
   StateProvider,
-  useStateValue
+  useStore
 }

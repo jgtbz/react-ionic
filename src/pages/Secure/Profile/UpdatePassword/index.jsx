@@ -44,7 +44,7 @@ const Component = ({ history }) => {
       .required(errorsMessages.required)
       .min(4, errorsMessages.minLength(4))
       .max(6, errorsMessages.minLength(6))
-      .oneOf([yup.ref('password'), null], errorsMessages.asSamePassword)
+      .oneOf([yup.ref('password'), null], errorsMessages.sameAsPassword)
   })
 
   const cleanAlert = () => setAlert('')
@@ -109,7 +109,7 @@ const Component = ({ history }) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/presentation" />
+            <IonBackButton />
           </IonButtons>
           <IonTitle>Alterar senha</IonTitle>
         </IonToolbar>

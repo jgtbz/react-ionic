@@ -15,12 +15,12 @@ import {
   AppAlert
 } from '../../../components'
 import { login, profile } from '../../../services/users'
-import { useStateValue } from '../../../store'
+import { useStore } from '../../../store'
 import { errorsMessages } from '../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const [, dispatch] = useStateValue()
+  const [, dispatch] = useStore()
   const [alert, setAlert] = useState('')
 
   const model = {
@@ -90,7 +90,7 @@ const Component = ({ history }) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/presentation" />
+            <IonBackButton />
           </IonButtons>
         </IonToolbar>
       </IonHeader>

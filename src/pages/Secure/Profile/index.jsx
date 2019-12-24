@@ -9,10 +9,10 @@ import {
   IonContent,
   IonButton
 } from '@ionic/react'
-import { useStateValue } from '../../../store'
+import { useStore } from '../../../store'
 
 const Component = ({ history }) => {
-  const [{ user }] = useStateValue()
+  const [{ user }] = useStore()
   return (
     <IonPage>
       <IonHeader>

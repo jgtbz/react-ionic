@@ -8,7 +8,7 @@ import {
   ForgotPassword
 } from '../../pages/Public'
 
-const Component = (params) => (
+const Component = () => (
   <IonRouterOutlet id="main">
     <Route path="/presentation" component={Presentation} exact />
     <Route path="/login" component={Login} exact />

@@ -28,8 +28,6 @@ const Component = ({ location }) => {
     setShowTabBar(withTabs.includes(location.pathname))
   }, [location.pathname])
 
-  const isSelected = (url) => equals(url, location.pathname)
-
   const tabBarStyles = { display: showTabBar ? 'flex' : 'none' }
 
   return (
@@ -47,7 +45,7 @@ const Component = ({ location }) => {
       </IonRouterOutlet>
       <IonTabBar slot="bottom" style={tabBarStyles}>
         {tabsItems.map((item, index) => (
-          <IonTabButton key={index} tab={item.tab} href={item.url} selected={isSelected(item.url)}>
+          <IonTabButton key={index} tab={item.tab} href={item.url} selected={equals(item.url, location.pathname)}>
             <IonIcon icon={item.icon} />
             <IonLabel>{item.title}</IonLabel>
           </IonTabButton>

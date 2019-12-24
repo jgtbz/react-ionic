@@ -12,10 +12,10 @@ import {
   IonIcon
 } from '@ionic/react'
 import { power } from 'ionicons/icons'
-import { useStateValue } from '../../../store'
+import { useStore } from '../../../store'
 
 const Component = ({ history }) => {
-  const [{user}, dispatch] = useStateValue()
+  const [{user}, dispatch] = useStore()
   
   const logout = () => {
     dispatch({ type: 'setLogout' })

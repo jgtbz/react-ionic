@@ -11,7 +11,7 @@ import {
   IonFabButton,
   IonIcon
 } from '@ionic/react'
-import { power } from 'ionicons/icons'
+import { bookmark } from 'ionicons/icons'
 
 const Component = ({ history }) => {
   return (
@@ -26,8 +26,8 @@ const Component = ({ history }) => {
       </IonHeader>
       <IonContent>
         <IonFab vertical="top" horizontal="end">
-          <IonFabButton onClick={() => history.push('/page11')}>
-            <IonIcon icon={power} />
+          <IonFabButton onClick={() => history.push('/profile')}>
+            <IonIcon icon={bookmark} />
           </IonFabButton>
         </IonFab>
       </IonContent>
