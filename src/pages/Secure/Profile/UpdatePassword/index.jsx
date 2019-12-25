@@ -20,16 +20,17 @@ import { errorsMessages } from '../../../../support/validators'
 import * as yup from 'yup'
 
 const Component = ({ history }) => {
-  const [alert, setAlert] = useState('')
+  const [success, setSuccess] = useState('')
+  const [error, setError] = useState('')
 
   const model = {
-    currentPassowrd: '',
+    currentPassword: '',
     password: '',
     confirmPassword: ''
   }
 
   const schema = yup.object().shape({
-    currentPassowrd: yup
+    currentPassword: yup
       .string()
       .required(errorsMessages.required)
       .min(4, errorsMessages.minLength(4))
@@ -47,17 +48,19 @@ const Component = ({ history }) => {
       .oneOf([yup.ref('password'), null], errorsMessages.sameAsPassword)
   })
 
-  const cleanAlert = () => setAlert('')
+  const cleanAlertSuccess = () => setSuccess('')
+  const cleanAlertError = () => setSuccess('')
 
-  const handleAlert = ({ message }) => setAlert(message)
+  const handleSuccess = ({ message }) => setSuccess(message)
+  const handleError = ({ message }) => setError(message)
   const handleRedirect = () => history.goBack()
   
   const handleSubmit = (values, actions) => {
     actions.setSubmitting(true)
     updatePassword(values)
-      .then(handleAlert)
+      .then(handleSuccess)
       .then(actions.resetForm)
-      .catch(handleAlert)
+      .catch(handleError)
       .finally(() => actions.setSubmitting(false))
   }
 
@@ -66,10 +69,10 @@ const Component = ({ history }) => {
       <AppFormItem
         label="Senha atual"
         placeholder="Entre com a sua senha atual"
-        name="currentPassowrd"
+        name="currentPassword"
         type="password"
-        value={values.currentPassowrd}
-        error={errors.currentPassowrd}
+        value={values.currentPassword}
+        error={errors.currentPassword}
         touched={touched.password}
         handleChange={handleChange}
         Input={IonInput} />
@@ -97,7 +100,7 @@ const Component = ({ history }) => {
     </form>
   )
 
-  const alertButtons = [
+  const alertSuccessButtons = [
     {
       text: 'Ok',
       handler: handleRedirect
@@ -121,9 +124,12 @@ const Component = ({ history }) => {
           handleSubmit={handleSubmit}
           Form={Form} />
         <AppAlert
-          message={alert}
-          buttons={alertButtons}
-          onDidDismiss={cleanAlert} />
+          message={success}
+          buttons={alertSuccessButtons}
+          onDidDismiss={cleanAlertSuccess} />
+        <AppAlert
+          message={error}
+          onDidDismiss={cleanAlertError} />
       </IonContent>
     </IonPage>
   )

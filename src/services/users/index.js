@@ -46,8 +46,8 @@ const updateUsers = (id, payload) => useApi
     message: 'Dados atualizados com sucesso'
   }))
 
-const updatePassword = (id, payload) => useApi
-  ? http.patch(`/users/password/${id}`, payload)
+const updatePassword = (payload) => useApi
+  ? http.patch(`/users/password`, payload)
   : new Promise((resolve) => resolve({
     message: 'Senha alterada com sucesso'
   }))

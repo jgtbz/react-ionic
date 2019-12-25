@@ -4,8 +4,8 @@ import axios from 'axios'
 import { concat } from 'ramda'
 
 const http = axios.create({
-  baseURL: 'http://localhost:3000/api/v1',
-  // baseURL: 'http://192.168.0.47:3000/api/v1',
+  // baseURL: 'http://localhost:3000/api/v1',
+  baseURL: 'http://192.168.0.47:3000/api/v1',
   headers: {
     'Content-Type': 'application/json'
   }
