@@ -8,10 +8,11 @@ import {
 } from '@ionic/react'
 
 const Component = () => {
+  const slidesStyles = { height: '100%' }
   return (
     <IonPage>
       <IonContent>
-        <IonSlides>
+        <IonSlides style={slidesStyles}>
           <IonSlide>
             <h1>Slide 1</h1>
           </IonSlide>

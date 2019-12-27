@@ -51,8 +51,9 @@ const Component = ({ history }) => {
   const cleanAlertSuccess = () => setSuccess('')
   const cleanAlertError = () => setSuccess('')
 
-  const handleSuccess = ({ message }) => setSuccess(message)
-  const handleError = ({ message }) => setError(message)
+  const handleAlert = (setState) => ({ message }) => setState(message)
+  const handleSuccess = handleAlert(setSuccess)
+  const handleError = handleAlert(setError)
   const handleRedirect = () => history.goBack()
   
   const handleSubmit = (values, actions) => {
