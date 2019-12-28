@@ -6,26 +6,49 @@ import {
   IonSlide,
   IonButton
 } from '@ionic/react'
+import {
+  ionicLogo,
+  reactLogo,
+  ionicReactLogo
+} from '../../../assets'
 
 const Component = () => {
-  const slidesStyles = { height: '100%' }
+  const slidesStyles = { height: '100%', color: '#cbccce', backgroundColor: '#53565d', '--bullet-background-active': '#97999d' }
+  const slideStyle = { display: 'block' }
+  const slideImageStyle = { height: '40%', marginTop: '35px' }
+  const slideButtonStyle = { '--color': '#ffffff', '--border-color': '#a9aaae', '--box-shadow': 'none', marginLeft: '25px', marginRight: '25px' }
+  const slideButtonLoginStyle = { ...slideButtonStyle, marginTop: '25px', marginBottom: '15px' }
+
+  const WelcomeSlide = () => (
+    <IonSlide style={slideStyle}>
+      <img style={slideImageStyle} src={ionicLogo} alt="Ionic" />
+      <h1>Ionic</h1>
+    </IonSlide>
+  )
+
+  const HomeSlide = () => (
+    <IonSlide style={slideStyle}>
+      <img style={slideImageStyle} src={reactLogo} alt="React" />
+      <h1>React</h1>
+    </IonSlide>
+  )
+
+  const Slide = () => (
+    <IonSlide style={slideStyle}>
+      <img style={slideImageStyle} src={ionicReactLogo} alt="Ionic" />
+      <h1>Ionic + React</h1>
+      <IonButton style={slideButtonLoginStyle} shape="round" expand="block" fill="outline" routerLink="/login">Login</IonButton>
+      <IonButton style={slideButtonStyle} shape="round" expand="block" fill="outline" routerLink="/register">Cadastro</IonButton>
+    </IonSlide>
+  )
+
   return (
     <IonPage>
       <IonContent>
-        <IonSlides style={slidesStyles}>
-          <IonSlide>
-            <h1>Slide 1</h1>
-          </IonSlide>
-          <IonSlide>
-            <h1>Slide 2</h1>
-          </IonSlide>
-          <IonSlide>
-            <div>
-              <h1>Slide 3</h1>
-              <IonButton routerLink="/login">Login</IonButton>
-              <IonButton routerLink="/register">Cadastro</IonButton>
-            </div>
-          </IonSlide>
+        <IonSlides style={slidesStyles} pager>
+          <WelcomeSlide />
+          <HomeSlide />
+          <Slide />
         </IonSlides>
       </IonContent>
     </IonPage>
