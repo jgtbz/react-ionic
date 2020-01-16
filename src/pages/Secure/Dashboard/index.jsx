@@ -11,11 +11,11 @@ import {
   IonFabButton,
   IonIcon
 } from '@ionic/react'
-import { power } from 'ionicons/icons'
+import { home, power } from 'ionicons/icons'
 import { useStore } from '../../../store'
 
 const Component = ({ history }) => {
-  const [{user}, dispatch] = useStore()
+  const [, dispatch] = useStore()
   
   const logout = () => {
     dispatch({ type: 'setLogout' })
@@ -33,12 +33,16 @@ const Component = ({ history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonFab vertical="top" horizontal="start">
+        <IonFabButton onClick={() => history.push('/profile')}>
+            <IonIcon icon={home} />
+          </IonFabButton>
+        </IonFab>
         <IonFab vertical="top" horizontal="end">
           <IonFabButton onClick={logout}>
             <IonIcon icon={power} />
           </IonFabButton>
         </IonFab>
-        {JSON.stringify(user)}
       </IonContent>
     </IonPage>
   )

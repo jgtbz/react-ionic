@@ -49,7 +49,7 @@ const Component = ({ history }) => {
   })
 
   const cleanAlertSuccess = () => setSuccess('')
-  const cleanAlertError = () => setSuccess('')
+  const cleanAlertError = () => setError('')
 
   const handleAlert = (setState) => ({ message }) => setState(message)
   const handleSuccess = handleAlert(setSuccess)

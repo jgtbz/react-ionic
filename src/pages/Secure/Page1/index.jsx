@@ -26,7 +26,7 @@ const Component = ({ history }) => {
       </IonHeader>
       <IonContent>
         <IonFab vertical="top" horizontal="end">
-          <IonFabButton onClick={() => history.push('/profile')}>
+          <IonFabButton onClick={() => history.push('/page11')}>
             <IonIcon icon={bookmark} />
           </IonFabButton>
         </IonFab>
