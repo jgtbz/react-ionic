@@ -1,4 +1,7 @@
+const notEmpty = ({ description }) => !!description
+const format = ({ description }) => `<br>${description}</br>`
+
 export default (errors = []) => errors
-  .filter(({ description }) => !!description)
-  .map(({ description }) => `<br>${description}</br>`)
+  .filter(notEmpty)
+  .map(format)
   .join('')

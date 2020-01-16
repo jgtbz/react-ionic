@@ -80,8 +80,10 @@ const Component = ({ history }) => {
         handleChange={handleChange}
         Input={IonInput} />
       <IonButton type="submit" disabled={!dirty && isSubmitting}>Enviar</IonButton>
-      <IonButton routerLink="/register">Cadastro</IonButton>
-      <IonButton routerLink="/forgot-password">Esqueceu a senha ?</IonButton>
+      <div>
+        <IonButton routerLink="/register">Cadastro</IonButton>
+        <IonButton routerLink="/forgot-password">Esqueceu a senha ?</IonButton>
+      </div>
     </form>
   )
 
