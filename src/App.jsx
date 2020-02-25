@@ -2,7 +2,7 @@ import React from 'react'
 import { IonApp } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { StateProvider, initialState, reducer } from './store'
-import Container from './containers'
+import Layout from './layouts'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -21,7 +21,7 @@ const App = () => (
   <StateProvider initialState={initialState} reducer={reducer}>
     <IonApp>
       <IonReactRouter>
-        <Container />
+        <Layout />
       </IonReactRouter>
     </IonApp>
   </StateProvider>

@@ -6,11 +6,11 @@ import { useStore } from '../store'
 const Component = () => {
   const [{ isLogged }] = useStore()
 
-  const Container = isLogged
+  const Layout = isLogged
     ? Secure
     : Public
 
-  return <Container />
+  return <Layout />
 }
 
 export default Component
